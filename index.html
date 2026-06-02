@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>K.O GAMES — Choose a direction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
+<style>
+  :root{ --bg:#0e0e12; --panel:#17171e; --line:#2a2a36; --ink:#f3f3f7; --dim:#9a9aab; --accent:#ff5d5d; }
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk',sans-serif; line-height:1.5}
+  body::before{content:""; position:fixed; inset:0; z-index:-1; background:
+    radial-gradient(700px 400px at 15% 0%, rgba(255,93,93,.12), transparent 60%),
+    radial-gradient(700px 400px at 100% 30%, rgba(58,107,255,.12), transparent 60%)}
+  a{color:inherit; text-decoration:none}
+  .wrap{max-width:1340px; margin:0 auto; padding:0 32px}
+
+  header{padding:46px 0 30px; text-align:center}
+  .logo{font-family:'Press Start 2P',monospace; font-size:15px; display:inline-flex; align-items:center; gap:10px; margin-bottom:26px}
+  .logo b{background:var(--accent); color:#fff; padding:8px 10px; border-radius:6px}
+  .logo i{font-style:normal; color:var(--ink)}
+  header h1{font-size:46px; font-weight:700; letter-spacing:-1px; margin-bottom:14px}
+  header h1 span{color:var(--accent)}
+  header p{color:var(--dim); font-size:19px; max-width:620px; margin:0 auto}
+  .hint{display:inline-flex; align-items:center; gap:8px; margin-top:22px; font-size:14px; color:var(--dim); border:1px solid var(--line); border-radius:30px; padding:9px 18px; background:var(--panel)}
+  .hint b{color:var(--ink); font-weight:600}
+
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px; padding:24px 0 70px}
+  .opt{background:var(--panel); border:1px solid var(--line); border-radius:20px; overflow:hidden; display:flex; flex-direction:column; transition:.2s}
+  .opt:hover{transform:translateY(-5px); border-color:#3a3a48; box-shadow:0 24px 50px rgba(0,0,0,.4)}
+  .preview{position:relative; height:340px; overflow:hidden; border-bottom:1px solid var(--line); background:#000}
+  .preview .frame{position:absolute; top:0; left:0; width:1280px; height:1700px; border:0; transform:scale(.355); transform-origin:top left; pointer-events:none}
+  .preview .veil{position:absolute; inset:0; cursor:pointer}
+  .preview .num{position:absolute; top:14px; left:14px; z-index:3; width:38px; height:38px; border-radius:50%; background:rgba(0,0,0,.6); border:1px solid rgba(255,255,255,.3); backdrop-filter:blur(6px); display:grid; place-items:center; font-family:'Press Start 2P',monospace; font-size:12px}
+  .obody{padding:24px; display:flex; flex-direction:column; gap:14px; flex:1}
+  .ohead{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .ohead h3{font-size:23px; font-weight:700}
+  .swatches{display:flex; gap:6px}
+  .sw{width:18px; height:18px; border-radius:5px; border:1px solid rgba(255,255,255,.18)}
+  .otag{font-size:13px; font-weight:600; color:var(--dim); text-transform:uppercase; letter-spacing:1px}
+  .odesc{color:var(--dim); font-size:16px; flex:1}
+  .actions{display:flex; gap:10px; margin-top:6px}
+  .btn{flex:1; text-align:center; font-weight:600; font-size:15px; padding:13px; border-radius:12px; cursor:pointer; transition:.15s}
+  .btn.primary{background:var(--ink); color:#111}
+  .btn.primary:hover{background:#fff}
+  .btn.ghost{border:1px solid var(--line); color:var(--ink)}
+  .btn.ghost:hover{border-color:#555; background:rgba(255,255,255,.03)}
+
+  footer{border-top:1px solid var(--line); padding:26px 0; text-align:center; color:var(--dim); font-size:14px}
+  @media(max-width:1000px){ .grid{grid-template-columns:1fr; max-width:520px; margin:0 auto} header h1{font-size:34px} }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap">
+      <div class="logo"><b>K.O</b><i>GAMES</i></div>
+      <h1>Three directions for <span>your store</span></h1>
+      <p>Same shop, same products — three distinct retro-arcade looks. Preview each below, open the full home page and product page, then tell me which one to take forward.</p>
+      <div class="hint">🎮 Each direction includes a <b>home page</b> + a <b>product page</b></div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="grid">
+
+      <!-- A -->
+      <div class="opt">
+        <div class="preview">
+          <div class="num">01</div>
+          <iframe class="frame" src="ko-arcade-home.html" title="Arcade preview" scrolling="no"></iframe>
+          <a class="veil" href="ko-arcade-home.html"></a>
+        </div>
+        <div class="obody">
+          <div class="ohead"><h3>8-Bit Arcade</h3>
+            <div class="swatches"><span class="sw" style="background:#ff2e63"></span><span class="sw" style="background:#21e6c1"></span><span class="sw" style="background:#ffd23f"></span><span class="sw" style="background:#100c1c"></span></div>
+          </div>
+          <div class="otag">Pixel · Scanlines · NES palette</div>
+          <p class="odesc">Chunky pixel type, hard shadows and CRT scanlines. Pure cartridge-era nostalgia for a retro-leaning crowd.</p>
+          <div class="actions"><a class="btn primary" href="ko-arcade-home.html">Open home</a><a class="btn ghost" href="ko-arcade-product.html">Product page</a></div>
+        </div>
+      </div>
+
+      <!-- B -->
+      <div class="opt">
+        <div class="preview">
+          <div class="num">02</div>
+          <iframe class="frame" src="ko-neon-home.html" title="Neon preview" scrolling="no"></iframe>
+          <a class="veil" href="ko-neon-home.html"></a>
+        </div>
+        <div class="obody">
+          <div class="ohead"><h3>Neon Synthwave</h3>
+            <div class="swatches"><span class="sw" style="background:#ff3ca6"></span><span class="sw" style="background:#00f0ff"></span><span class="sw" style="background:#a64bff"></span><span class="sw" style="background:#0a0118"></span></div>
+          </div>
+          <div class="otag">Glow · Synth sun · Perspective grid</div>
+          <p class="odesc">80s after-dark vibe: neon glow, a setting sun and an infinite grid. Premium and atmospheric, still playful.</p>
+          <div class="actions"><a class="btn primary" href="ko-neon-home.html">Open home</a><a class="btn ghost" href="ko-neon-product.html">Product page</a></div>
+        </div>
+      </div>
+
+      <!-- C -->
+      <div class="opt">
+        <div class="preview">
+          <div class="num">03</div>
+          <iframe class="frame" src="ko-pop-home.html" title="Pop preview" scrolling="no"></iframe>
+          <a class="veil" href="ko-pop-home.html"></a>
+        </div>
+        <div class="obody">
+          <div class="ohead"><h3>Pop Cartridge</h3>
+            <div class="swatches"><span class="sw" style="background:#ff5d5d"></span><span class="sw" style="background:#3a6bff"></span><span class="sw" style="background:#ffc62e"></span><span class="sw" style="background:#fff6e9"></span></div>
+          </div>
+          <div class="otag">Sticker · Bold outlines · Bright</div>
+          <p class="odesc">Light, candy-bright and sticker-loud. Thick outlines and hard drop shadows — the most fun, youthful and approachable.</p>
+          <div class="actions"><a class="btn primary" href="ko-pop-home.html">Open home</a><a class="btn ghost" href="ko-pop-product.html">Product page</a></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer><div class="wrap">K.O GAMES · 3 mockups · pick a direction and I'll refine it</div></footer>
+
+</body>
+</html>

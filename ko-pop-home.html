@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>K.O GAMES — Pop Arcade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#fff6e9; --paper:#fffdf8; --ink:#211c33;
+    --red:#ff5d5d; --blue:#3a6bff; --yellow:#ffc62e; --green:#19c97a; --pink:#ff6fb5; --purple:#9a6bff; --orange:#ff8a3d; --cyan:#2fd3d3;
+    --disp:'Bungee', sans-serif; --body:'Fredoka', sans-serif;
+    --sh:6px 6px 0 var(--ink); --sh-sm:4px 4px 0 var(--ink); --sh-lg:9px 9px 0 var(--ink);
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--cream); color:var(--ink); font-family:var(--body); font-size:18px; font-weight:500; line-height:1.45;
+    background-image:radial-gradient(var(--ink) 1.4px, transparent 1.4px); background-size:26px 26px; background-position:-13px -13px}
+  body::before{content:""; position:fixed; inset:0; z-index:-1; background:var(--cream); opacity:.93}
+  a{color:inherit; text-decoration:none}
+  .wrap{max-width:1260px; margin:0 auto; padding:0 26px}
+  .disp{font-family:var(--disp)}
+  .btn{font-family:var(--disp); font-size:15px; cursor:pointer; padding:15px 26px; border-radius:16px; border:3px solid var(--ink);
+    background:var(--yellow); color:var(--ink); box-shadow:var(--sh); transition:transform .08s, box-shadow .08s; display:inline-block; text-align:center}
+  .btn:hover{transform:translate(2px,2px); box-shadow:var(--sh-sm)}
+  .btn:active{transform:translate(6px,6px); box-shadow:0 0 0 var(--ink)}
+  .btn.red{background:var(--red); color:#fff} .btn.blue{background:var(--blue); color:#fff} .btn.green{background:var(--green); color:#fff} .btn.pink{background:var(--pink); color:#fff}
+  .badge{font-family:var(--disp); font-size:11px; padding:7px 12px; border-radius:30px; border:3px solid var(--ink); background:#fff; box-shadow:var(--sh-sm); display:inline-block}
+
+  /* TOPBAR */
+  .topbar{background:var(--ink); color:#fff; text-align:center; font-family:var(--disp); font-size:12px; letter-spacing:1px; padding:10px}
+  .topbar span{color:var(--yellow)}
+  /* HEADER */
+  header{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:3px solid var(--ink)}
+  .nav{display:flex; align-items:center; gap:22px; padding:16px 0}
+  .logo{font-family:var(--disp); font-size:22px; display:flex; align-items:center; gap:7px}
+  .logo .ko{background:var(--red); color:#fff; padding:7px 10px; border:3px solid var(--ink); border-radius:12px; box-shadow:var(--sh-sm); transform:rotate(-3deg)}
+  .logo .g{color:var(--ink)}
+  nav.links{display:flex; gap:8px; margin-left:8px}
+  nav.links a{font-family:var(--body); font-weight:600; font-size:16px; padding:8px 14px; border-radius:12px; transition:.15s}
+  nav.links a:hover{background:var(--yellow); border:0}
+  .search{margin-left:auto; display:flex; align-items:center; gap:10px; background:#fff; border:3px solid var(--ink); border-radius:30px; padding:9px 18px; min-width:240px; box-shadow:var(--sh-sm)}
+  .search input{background:none; border:none; outline:none; font-family:var(--body); font-weight:500; font-size:16px; width:100%; color:var(--ink)}
+  .search input::placeholder{color:#b3a9bf}
+  .hicons{display:flex; gap:10px; align-items:center}
+  .icbtn{font-family:var(--disp); font-size:12px; padding:11px 14px; border-radius:14px; border:3px solid var(--ink); background:#fff; box-shadow:var(--sh-sm); position:relative; cursor:pointer}
+  .icbtn .count{position:absolute; top:-10px; right:-10px; background:var(--green); color:#fff; border:3px solid var(--ink); border-radius:50%; width:24px; height:24px; display:grid; place-items:center; font-size:11px}
+
+  /* HERO */
+  .hero{padding:48px 0 30px}
+  .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center}
+  .hero .kick{font-family:var(--disp); font-size:13px; color:var(--red); margin-bottom:18px; display:inline-block; transform:rotate(-2deg)}
+  .hero h1{font-family:var(--disp); font-size:62px; line-height:1; margin-bottom:20px}
+  .hero h1 .a{color:var(--blue)} .hero h1 .b{color:var(--red)}
+  .hero p{font-size:21px; color:#5a5270; max-width:430px; margin-bottom:26px}
+  .hero-cta{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+  .hero .pill{font-family:var(--disp); font-size:14px; background:var(--green); color:#fff; border:3px solid var(--ink); border-radius:30px; padding:10px 16px; box-shadow:var(--sh-sm)}
+  .hero .pill s{opacity:.6; font-size:11px; margin-right:6px}
+  .hstats{display:flex; gap:14px; margin-top:28px; flex-wrap:wrap}
+  .hstat{background:#fff; border:3px solid var(--ink); border-radius:14px; padding:12px 16px; box-shadow:var(--sh-sm)}
+  .hstat b{font-family:var(--disp); font-size:18px; display:block} .hstat span{font-size:14px; color:#7a7290}
+
+  .herocard{position:relative}
+  .cart-art{aspect-ratio:1/1.02; border:4px solid var(--ink); border-radius:26px; box-shadow:var(--sh-lg); position:relative; overflow:hidden;
+    background:linear-gradient(150deg,var(--red),#d12f6e); display:flex; align-items:center; justify-content:center}
+  .cart-art .label{width:74%; height:46%; background:#fff; border:4px solid var(--ink); border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; transform:rotate(-2deg)}
+  .cart-art .label .t{font-family:var(--disp); font-size:30px; color:var(--ink); text-align:center; line-height:.95}
+  .cart-art .label .g{font-family:var(--disp); font-size:12px; color:var(--red)}
+  .cart-art .grip{position:absolute; top:0; left:18%; right:18%; height:8%; background:var(--ink)}
+  .sticker{position:absolute; font-family:var(--disp); font-size:14px; padding:12px 14px; border-radius:50%; border:3px solid var(--ink); width:78px; height:78px; display:grid; place-items:center; text-align:center; line-height:1; box-shadow:var(--sh-sm)}
+  .sticker.s1{top:-18px; right:-12px; background:var(--yellow); transform:rotate(12deg)}
+  .sticker.s2{bottom:-16px; left:-16px; background:var(--cyan); color:#fff; transform:rotate(-10deg); width:88px; height:88px; font-size:13px}
+
+  /* CATEGORIES bento */
+  section{padding:54px 0}
+  .shead{display:flex; align-items:center; justify-content:space-between; margin-bottom:26px; gap:14px; flex-wrap:wrap}
+  .shead h2{font-family:var(--disp); font-size:30px}
+  .shead h2 em{font-style:normal; color:var(--blue)}
+  .shead a{font-family:var(--disp); font-size:13px; background:#fff; border:3px solid var(--ink); border-radius:12px; padding:9px 14px; box-shadow:var(--sh-sm)}
+  .cats{display:grid; grid-template-columns:repeat(4,1fr); gap:18px}
+  .cat{border:3px solid var(--ink); border-radius:20px; padding:24px; box-shadow:var(--sh); cursor:pointer; transition:transform .1s, box-shadow .1s}
+  .cat:hover{transform:translate(-2px,-2px); box-shadow:var(--sh-lg)}
+  .cat .ic{font-family:var(--disp); font-size:26px; width:58px; height:58px; border:3px solid var(--ink); border-radius:14px; background:#fff; display:grid; place-items:center; margin-bottom:16px}
+  .cat h3{font-family:var(--disp); font-size:16px; margin-bottom:6px} .cat p{font-size:15px; color:rgba(33,28,51,.7)}
+  .cat.c1{background:var(--pink)} .cat.c2{background:var(--cyan)} .cat.c3{background:var(--yellow)} .cat.c4{background:var(--purple)} .cat.c1 h3,.cat.c4 h3{color:#fff} .cat.c1 p,.cat.c4 p{color:rgba(255,255,255,.85)}
+
+  /* PRODUCT GRID */
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px}
+  .card{background:var(--paper); border:3px solid var(--ink); border-radius:20px; box-shadow:var(--sh); overflow:hidden; display:flex; flex-direction:column; transition:transform .1s, box-shadow .1s}
+  .card:hover{transform:translate(-3px,-3px); box-shadow:var(--sh-lg)}
+  .cover{aspect-ratio:3/3.4; position:relative; display:flex; align-items:center; justify-content:center; border-bottom:3px solid var(--ink); overflow:hidden; padding:16px}
+  .cover .gname{font-family:var(--disp); font-size:20px; color:#fff; text-align:center; line-height:1; text-shadow:3px 3px 0 rgba(0,0,0,.25)}
+  .cover .gtag{position:absolute; top:12px; left:12px; font-family:var(--disp); font-size:10px; background:#fff; border:3px solid var(--ink); border-radius:30px; padding:5px 10px; transform:rotate(-3deg)}
+  .cover .fav{position:absolute; top:12px; right:12px; width:36px; height:36px; border:3px solid var(--ink); border-radius:50%; background:#fff; display:grid; place-items:center; font-size:16px; cursor:pointer}
+  .cinfo{padding:16px; display:flex; flex-direction:column; gap:8px; flex:1}
+  .cinfo h4{font-family:var(--disp); font-size:15px; line-height:1.1}
+  .cmeta{display:flex; gap:6px; align-items:center; flex-wrap:wrap}
+  .plat{font-family:var(--disp); font-size:9px; border:2px solid var(--ink); border-radius:8px; padding:3px 7px; background:#fff}
+  .st{margin-left:auto; font-family:var(--disp); font-size:12px; color:var(--orange)}
+  .cbottom{display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:6px}
+  .cprice{font-family:var(--disp); font-size:18px}
+  .cprice s{font-size:12px; color:#b3a9bf; margin-right:6px}
+  .addbtn{font-family:var(--disp); font-size:11px; background:var(--green); color:#fff; border:3px solid var(--ink); border-radius:12px; padding:9px 12px; cursor:pointer; box-shadow:var(--sh-sm); transition:transform .08s}
+  .addbtn:hover{transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink)}
+
+  /* HARDWARE */
+  .hw{background:var(--blue); border:4px solid var(--ink); border-radius:28px; box-shadow:var(--sh-lg); padding:42px; display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; position:relative; overflow:hidden}
+  .hw h2{font-family:var(--disp); font-size:34px; color:#fff; line-height:1.05; margin-bottom:16px}
+  .hw h2 em{font-style:normal; color:var(--yellow)}
+  .hw p{color:rgba(255,255,255,.9); font-size:19px; margin-bottom:24px; max-width:400px}
+  .hwgrid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  .hwc{background:var(--paper); border:3px solid var(--ink); border-radius:18px; padding:18px; text-align:center; box-shadow:var(--sh-sm)}
+  .hwc .hwbox{height:74px; border:3px solid var(--ink); border-radius:12px; margin-bottom:12px}
+  .hwc .hwn{font-family:var(--disp); font-size:13px; margin-bottom:5px} .hwc .hwp{font-family:var(--disp); font-size:15px; color:var(--blue)}
+
+  /* GOODIES */
+  .goodies{display:grid; grid-template-columns:repeat(4,1fr); gap:20px}
+  .good{background:var(--paper); border:3px solid var(--ink); border-radius:18px; overflow:hidden; box-shadow:var(--sh); transition:transform .1s}
+  .good:hover{transform:translate(-2px,-2px); box-shadow:var(--sh-lg)}
+  .good .gimg{height:150px; border-bottom:3px solid var(--ink); display:grid; place-items:center; font-family:var(--disp); font-size:14px; color:#fff; text-align:center; padding:10px; text-shadow:2px 2px 0 rgba(0,0,0,.2)}
+  .good .gb{padding:14px; display:flex; justify-content:space-between; align-items:center}
+  .good .gb h4{font-family:var(--disp); font-size:13px} .good .gb b{font-family:var(--disp); font-size:15px}
+
+  /* CLUB */
+  .club{background:var(--yellow); border:4px solid var(--ink); border-radius:28px; box-shadow:var(--sh-lg); padding:50px; text-align:center; position:relative; overflow:hidden}
+  .club h2{font-family:var(--disp); font-size:36px; margin-bottom:12px}
+  .club p{font-size:20px; color:rgba(33,28,51,.78); max-width:520px; margin:0 auto 26px}
+  .club form{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+  .club input{background:#fff; border:3px solid var(--ink); border-radius:14px; padding:14px 20px; font-family:var(--body); font-weight:500; font-size:17px; min-width:290px; box-shadow:var(--sh-sm); outline:none}
+
+  /* FOOTER */
+  footer{background:var(--ink); color:#fff; padding:50px 0 28px; margin-top:40px}
+  .fcols{display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:30px; margin-bottom:34px}
+  .fcols p{color:rgba(255,255,255,.7); margin-top:14px; max-width:280px}
+  .fcols h5{font-family:var(--disp); font-size:13px; color:var(--yellow); margin-bottom:16px}
+  .fcols a{display:block; color:rgba(255,255,255,.75); margin-bottom:9px}
+  .fcols a:hover{color:#fff}
+  .fbtm{border-top:2px solid rgba(255,255,255,.2); padding-top:22px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family:var(--disp); font-size:12px; color:rgba(255,255,255,.6)}
+  .footlogo .ko{background:var(--red); color:#fff; padding:7px 10px; border:3px solid #fff; border-radius:12px}
+
+  @media(max-width:900px){ .hero-grid,.hw,.hwgrid{grid-template-columns:1fr} .cats,.grid,.goodies{grid-template-columns:1fr 1fr} nav.links,.search{display:none} .hero h1{font-size:44px} }
+</style>
+</head>
+<body data-screen-label="Variant C — Pop Home">
+
+  <div class="topbar">FREE SHIPPING OVER $60 <span>·</span> NEW DROPS EVERY FRIDAY <span>·</span> MEMBERS GET 2× COINS</div>
+
+  <header>
+    <div class="wrap nav">
+      <a class="logo" href="#"><span class="ko">K.O</span><span class="g">GAMES</span></a>
+      <nav class="links"><a href="#games">Games</a><a href="#hw">Consoles</a><a href="#games">Accessories</a><a href="#goodies">Goodies</a><a href="#club">Deals</a></nav>
+      <div class="search"><span style="color:#b3a9bf">⌕</span><input placeholder="Search games &amp; gear…" /></div>
+      <div class="hicons"><div class="icbtn">SIGN IN</div><a class="icbtn" href="ko-pop-product.html">CART<span class="count">3</span></a></div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="kick">★ GAME OF THE WEEK ★</span>
+        <h1><span class="a">NEON</span> <span class="b">DRIFT</span><br/>RACE THE NIGHT!</h1>
+        <p>Burn rubber through a candy-bright megacity in the arcade racer everyone's playing. Out now on every system.</p>
+        <div class="hero-cta">
+          <a class="btn red" href="ko-pop-product.html">BUY NOW</a>
+          <a class="btn" href="ko-pop-product.html">VIEW GAME</a>
+          <span class="pill"><s>$59.99</s> $49.99</span>
+        </div>
+        <div class="hstats">
+          <div class="hstat"><b>4.9★</b><span>12.4k reviews</span></div>
+          <div class="hstat"><b>1–4P</b><span>Local + online</span></div>
+          <div class="hstat"><b>4K60</b><span>HDR ready</span></div>
+        </div>
+      </div>
+      <div class="herocard">
+        <div class="cart-art">
+          <div class="grip"></div>
+          <div class="label"><div class="t">NEON<br/>DRIFT</div><div class="g">▸ ARCADE RACER</div></div>
+        </div>
+        <div class="sticker s1">NEW!</div>
+        <div class="sticker s2">-17%<br/>OFF</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section>
+    <div class="wrap">
+      <div class="shead"><h2>Shop by <em>category</em></h2><a href="#games">ALL DEPARTMENTS →</a></div>
+      <div class="cats">
+        <div class="cat c1"><div class="ic">◉</div><h3>Video Games</h3><p>1,200+ titles · PC &amp; console</p></div>
+        <div class="cat c2"><div class="ic">▦</div><h3>Consoles</h3><p>Next-gen &amp; retro hardware</p></div>
+        <div class="cat c3"><div class="ic">✦</div><h3>Accessories</h3><p>Pads, sticks &amp; headsets</p></div>
+        <div class="cat c4"><div class="ic">★</div><h3>Goodies</h3><p>Pins, plush &amp; posters</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT GRID -->
+  <section id="games">
+    <div class="wrap">
+      <div class="shead"><h2>Fresh <em>drops</em> 🎮</h2><a href="#">SEE ALL 1200 →</a></div>
+      <div class="grid">
+
+        <a class="card" href="ko-pop-product.html"><div class="cover" style="background:linear-gradient(150deg,#ff5d5d,#c62f6e)"><span class="gtag">RACING</span><span class="fav">♡</span><span class="gname">NEON<br/>DRIFT</span></div>
+          <div class="cinfo"><h4>Neon Drift</h4><div class="cmeta"><span class="plat">PS5</span><span class="plat">PC</span><span class="st">★4.9</span></div><div class="cbottom"><span class="cprice"><s>$59</s>$49.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+        <a class="card" href="ko-pop-product.html"><div class="cover" style="background:linear-gradient(150deg,#3a6bff,#2742b8)"><span class="gtag">RPG</span><span class="fav">♡</span><span class="gname">PIXEL<br/>QUEST IV</span></div>
+          <div class="cinfo"><h4>Pixel Quest IV</h4><div class="cmeta"><span class="plat">SWITCH</span><span class="plat">PC</span><span class="st">★4.7</span></div><div class="cbottom"><span class="cprice">$39.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+        <a class="card" href="ko-pop-product.html"><div class="cover" style="background:linear-gradient(150deg,#19c97a,#0d8a52)"><span class="gtag">SHOOTER</span><span class="fav">♡</span><span class="gname">GALAXY<br/>RAIDERS</span></div>
+          <div class="cinfo"><h4>Galaxy Raiders</h4><div class="cmeta"><span class="plat">PS5</span><span class="plat">PC</span><span class="st">★4.9</span></div><div class="cbottom"><span class="cprice">$59.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+        <a class="card" href="ko-pop-product.html"><div class="cover" style="background:linear-gradient(150deg,#ffc62e,#e08e10)"><span class="gtag">FIGHTING</span><span class="fav">♡</span><span class="gname" style="color:#211c33;text-shadow:2px 2px 0 #fff">KOMBAT<br/>FURY</span></div>
+          <div class="cinfo"><h4>Kombat Fury</h4><div class="cmeta"><span class="plat">PS5</span><span class="plat">XBX</span><span class="st">★4.6</span></div><div class="cbottom"><span class="cprice">$44.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+        <a class="card" href="ko-pop-product.html"><div class="cover" style="background:linear-gradient(150deg,#9a6bff,#5e2fb8)"><span class="gtag">ADVENTURE</span><span class="fav">♡</span><span class="gname">STAR<br/>VOYAGER</span></div>
+          <div class="cinfo"><h4>Star Voyager</h4><div class="cmeta"><span class="plat">SWITCH</span><span class="plat">PC</span><span class="st">★4.8</span></div><div class="cbottom"><span class="cprice">$54.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+        <a class="card" href="ko-pop-product.html"><div class="cover" style="background:linear-gradient(150deg,#2fd3d3,#129a9a)"><span class="gtag">ARCADE</span><span class="fav">♡</span><span class="gname" style="color:#0a3838;text-shadow:2px 2px 0 #fff">BLOCK<br/>BREAKER</span></div>
+          <div class="cinfo"><h4>Block Breaker DX</h4><div class="cmeta"><span class="plat">ALL</span><span class="st">★4.5</span></div><div class="cbottom"><span class="cprice">$19.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+        <a class="card" href="ko-pop-product.html"><div class="cover" style="background:linear-gradient(150deg,#ff8a3d,#d1561a)"><span class="gtag">ROGUELIKE</span><span class="fav">♡</span><span class="gname">DUNGEON<br/>LOOP</span></div>
+          <div class="cinfo"><h4>Dungeon Loop</h4><div class="cmeta"><span class="plat">PC</span><span class="plat">SWITCH</span><span class="st">★4.9</span></div><div class="cbottom"><span class="cprice">$24.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+        <a class="card" href="ko-pop-product.html"><div class="cover" style="background:linear-gradient(150deg,#ff6fb5,#c63d83)"><span class="gtag">RACING</span><span class="fav">♡</span><span class="gname">TURBO<br/>KART</span></div>
+          <div class="cinfo"><h4>Turbo Kart Mania</h4><div class="cmeta"><span class="plat">SWITCH</span><span class="st">★4.7</span></div><div class="cbottom"><span class="cprice">$34.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HARDWARE -->
+  <section id="hw">
+    <div class="wrap">
+      <div class="hw">
+        <div>
+          <span class="badge">🕹️ HARDWARE DROP</span>
+          <h2 style="margin-top:16px">Level up your<br/><em>battle station!</em></h2>
+          <p>Next-gen consoles &amp; retro classics, fully tested. Bundle any console with two games and save 15%.</p>
+          <a class="btn yellow" href="#" style="background:var(--yellow)">SHOP CONSOLES →</a>
+        </div>
+        <div class="hwgrid">
+          <div class="hwc"><div class="hwbox" style="background:linear-gradient(150deg,#3a6bff,#2742b8)"></div><div class="hwn">PixelStation 5</div><div class="hwp">$499</div></div>
+          <div class="hwc"><div class="hwbox" style="background:linear-gradient(150deg,#ff5d5d,#c62f6e)"></div><div class="hwn">K.O Switch</div><div class="hwp">$299</div></div>
+          <div class="hwc"><div class="hwbox" style="background:linear-gradient(150deg,#19c97a,#0d8a52)"></div><div class="hwn">MegaBox Series K</div><div class="hwp">$449</div></div>
+          <div class="hwc"><div class="hwbox" style="background:linear-gradient(150deg,#ffc62e,#e08e10)"></div><div class="hwn">Retro Mini '88</div><div class="hwp">$89</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOODIES -->
+  <section id="goodies">
+    <div class="wrap">
+      <div class="shead"><h2>Loot &amp; <em>goodies</em></h2><a href="#">BROWSE MERCH →</a></div>
+      <div class="goodies">
+        <div class="good"><div class="gimg" style="background:var(--pink)">ENAMEL PINS</div><div class="gb"><h4>Boss Pins ×6</h4><b>$14</b></div></div>
+        <div class="good"><div class="gimg" style="background:var(--cyan)">8-BIT PLUSH</div><div class="gb"><h4>Slime Plush</h4><b>$22</b></div></div>
+        <div class="good"><div class="gimg" style="background:var(--orange)">A1 POSTER</div><div class="gb"><h4>Neon Drift</h4><b>$18</b></div></div>
+        <div class="good"><div class="gimg" style="background:var(--purple)">SNAPBACK CAP</div><div class="gb"><h4>K.O Crew</h4><b>$28</b></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLUB -->
+  <section id="club">
+    <div class="wrap">
+      <div class="club">
+        <span class="badge" style="background:var(--ink); color:#fff">★ K.O CLUB</span>
+        <h2 style="margin-top:16px">Join the club!</h2>
+        <p>Get 2× coins, early drops and members-only deals. Pop in your email to continue.</p>
+        <form onsubmit="return false"><input placeholder="player@email.com" /><button class="btn red" type="submit">PRESS START →</button></form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="fcols">
+        <div><a class="logo footlogo" href="#" style="font-size:20px; color:#fff"><span class="ko">K.O</span><span class="g" style="color:#fff">GAMES</span></a><p>The arcade reborn, full colour. New &amp; retro games, hardware and loot since 1988.</p></div>
+        <div><h5>SHOP</h5><a href="#">Video Games</a><a href="#">Consoles</a><a href="#">Accessories</a><a href="#">Goodies</a></div>
+        <div><h5>SUPPORT</h5><a href="#">Track Order</a><a href="#">Returns</a><a href="#">Trade-In</a><a href="#">Contact</a></div>
+        <div><h5>K.O CLUB</h5><a href="#">Rewards</a><a href="#">Gift Cards</a><a href="#">Events</a><a href="#">Careers</a></div>
+      </div>
+      <div class="fbtm"><span>© 1988–2026 K.O GAMES</span><span>PLAY MORE · WIN MORE</span></div>
+    </div>
+  </footer>
+
+</body>
+</html>

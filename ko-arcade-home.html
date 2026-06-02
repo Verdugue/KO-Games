@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>K.O GAMES — 8-Bit Arcade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#100c1c; --bg2:#1a1430; --panel:#221a3d; --panel2:#2c2150;
+    --ink:#f6f3ff; --dim:#b3a6e0;
+    --pink:#ff2e63; --cyan:#21e6c1; --yellow:#ffd23f; --green:#3ddc84; --purple:#8a5cff; --blue:#3a7bff;
+    --pixel:'Press Start 2P', monospace; --body:'VT323', monospace;
+    --line:#3a2d63;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--body);
+    font-size:21px; line-height:1.25; -webkit-font-smoothing:none;
+    image-rendering:pixelated;
+  }
+  body::after{ /* scanlines */
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:9999;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.22) 2px 4px);
+    mix-blend-mode:multiply; opacity:.55;
+  }
+  a{color:inherit; text-decoration:none}
+  .px{font-family:var(--pixel)}
+  .wrap{max-width:1240px; margin:0 auto; padding:0 24px}
+  .pixel-box{ border:3px solid #000; box-shadow:6px 6px 0 rgba(0,0,0,.55); }
+  .btn{
+    font-family:var(--pixel); font-size:12px; text-transform:uppercase; cursor:pointer;
+    border:3px solid #000; padding:14px 20px; background:var(--yellow); color:#000;
+    box-shadow:5px 5px 0 rgba(0,0,0,.6); transition:transform .05s, box-shadow .05s; display:inline-block;
+  }
+  .btn:hover{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(0,0,0,.6)}
+  .btn:active{transform:translate(5px,5px); box-shadow:0 0 0 rgba(0,0,0,.6)}
+  .btn.pink{background:var(--pink); color:#fff} .btn.cyan{background:var(--cyan)} .btn.green{background:var(--green)}
+  .tag{font-family:var(--pixel); font-size:9px; text-transform:uppercase; padding:5px 8px; border:2px solid #000; display:inline-block}
+
+  /* MARQUEE */
+  .marquee{background:var(--pink); color:#fff; border-bottom:3px solid #000; overflow:hidden; white-space:nowrap}
+  .marquee div{display:inline-block; padding:8px 0; animation:scroll 22s linear infinite; font-family:var(--pixel); font-size:10px}
+  .marquee span{margin:0 26px}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* HEADER */
+  header{position:sticky; top:0; z-index:50; background:var(--bg2); border-bottom:3px solid #000}
+  .nav{display:flex; align-items:center; gap:22px; padding:16px 0}
+  .logo{font-family:var(--pixel); font-size:22px; letter-spacing:1px; line-height:1; display:flex; align-items:center; gap:0}
+  .logo b{background:var(--pink); color:#fff; padding:8px 9px; border:3px solid #000; box-shadow:4px 4px 0 rgba(0,0,0,.6)}
+  .logo i{font-style:normal; color:var(--yellow); margin-left:10px; text-shadow:3px 3px 0 #000}
+  nav.links{display:flex; gap:20px; margin-left:14px}
+  nav.links a{font-family:var(--pixel); font-size:11px; text-transform:uppercase; padding:6px 2px; color:var(--dim)}
+  nav.links a:hover{color:var(--cyan)}
+  .search{margin-left:auto; display:flex; align-items:center; background:var(--panel); border:3px solid #000; padding:8px 12px; min-width:230px}
+  .search input{background:none; border:none; color:var(--ink); font-family:var(--body); font-size:20px; outline:none; width:100%}
+  .search input::placeholder{color:#7c6caf}
+  .hicons{display:flex; gap:10px; align-items:center}
+  .icbtn{font-family:var(--pixel); font-size:10px; background:var(--panel); border:3px solid #000; padding:11px 12px; position:relative; cursor:pointer}
+  .icbtn .count{position:absolute; top:-9px; right:-9px; background:var(--green); color:#000; border:2px solid #000; font-size:8px; padding:2px 4px}
+
+  /* HERO */
+  .hero{padding:46px 0 40px; background:
+      radial-gradient(900px 360px at 78% 12%, rgba(138,92,255,.35), transparent 60%),
+      radial-gradient(700px 320px at 10% 90%, rgba(33,230,193,.18), transparent 60%);}
+  .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center}
+  .eyebrow{font-family:var(--pixel); font-size:11px; color:var(--cyan); display:inline-block; margin-bottom:20px; border:2px solid var(--cyan); padding:6px 10px}
+  .hero h1{font-family:var(--pixel); font-size:46px; line-height:1.18; text-shadow:5px 5px 0 #000; margin-bottom:18px}
+  .hero h1 .hl{color:var(--pink)} .hero h1 .hl2{color:var(--yellow)}
+  .hero p{font-size:24px; color:var(--dim); max-width:440px; margin-bottom:26px}
+  .hero-cta{display:flex; gap:16px; align-items:center; flex-wrap:wrap}
+  .price-tag{font-family:var(--pixel); font-size:16px; color:var(--yellow)}
+  .price-tag s{color:#7c6caf; font-size:12px; margin-right:8px}
+  .hstats{display:flex; gap:26px; margin-top:30px}
+  .hstat b{font-family:var(--pixel); font-size:18px; color:var(--cyan); display:block; margin-bottom:6px}
+  .hstat span{font-size:18px; color:var(--dim)}
+
+  /* faux cover / screen */
+  .cab{position:relative; aspect-ratio:4/3.4; border:3px solid #000; box-shadow:8px 8px 0 rgba(0,0,0,.6);
+    background:linear-gradient(180deg,#2a1b52,#140d28); padding:16px}
+  .screen{height:100%; border:3px solid #000; position:relative; overflow:hidden;
+    background:
+      radial-gradient(2px 2px at 20% 30%, #fff, transparent),
+      radial-gradient(2px 2px at 70% 20%, #fff, transparent),
+      radial-gradient(2px 2px at 40% 60%, #fff, transparent),
+      radial-gradient(2px 2px at 85% 70%, #fff, transparent),
+      radial-gradient(2px 2px at 55% 85%, #fff, transparent),
+      linear-gradient(180deg,#1b1140 0%, #3a1d6e 55%, #ff2e63 56%, #7a1238 100%);}
+  .screen .sun{position:absolute; left:50%; top:30%; transform:translateX(-50%); width:120px; height:120px; border-radius:50%;
+    background:linear-gradient(180deg,var(--yellow),var(--pink)); box-shadow:0 0 0 3px #000}
+  .screen .road{position:absolute; left:0; right:0; bottom:0; height:42%;
+    background:repeating-linear-gradient(90deg,#2a0f3d 0 12%, #3a1556 12% 24%);
+    background-size:30px 100%;
+    mask:linear-gradient(180deg, transparent, #000 40%);}
+  .screen .title{position:absolute; left:50%; bottom:14px; transform:translateX(-50%); font-family:var(--pixel); font-size:14px; color:#fff; text-shadow:3px 3px 0 #000; white-space:nowrap}
+  .cab .knobs{position:absolute; bottom:-3px; left:16px; right:16px; height:14px; background:#000}
+
+  /* SECTION HEADS */
+  section{padding:50px 0}
+  .shead{display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:28px; gap:16px; flex-wrap:wrap}
+  .shead h2{font-family:var(--pixel); font-size:24px; text-shadow:3px 3px 0 #000}
+  .shead h2 .dot{color:var(--pink)}
+  .shead a{font-family:var(--pixel); font-size:10px; color:var(--cyan); border-bottom:2px solid var(--cyan); padding-bottom:4px}
+
+  /* CATEGORIES */
+  .cats{display:grid; grid-template-columns:repeat(4,1fr); gap:18px}
+  .cat{padding:26px 20px; border:3px solid #000; box-shadow:6px 6px 0 rgba(0,0,0,.5); cursor:pointer; transition:transform .08s}
+  .cat:hover{transform:translate(-2px,-2px)}
+  .cat .ic{font-family:var(--pixel); font-size:30px; display:block; margin-bottom:18px}
+  .cat h3{font-family:var(--pixel); font-size:13px; margin-bottom:8px}
+  .cat p{color:rgba(0,0,0,.7); font-size:18px}
+  .cat.c1{background:var(--pink); color:#fff} .cat.c1 p{color:rgba(255,255,255,.85)}
+  .cat.c2{background:var(--cyan)} .cat.c3{background:var(--yellow)} .cat.c4{background:var(--purple); color:#fff} .cat.c4 p{color:rgba(255,255,255,.85)}
+
+  /* PRODUCT GRID */
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px}
+  .card{background:var(--panel); border:3px solid #000; box-shadow:6px 6px 0 rgba(0,0,0,.55); display:flex; flex-direction:column; transition:transform .08s}
+  .card:hover{transform:translate(-3px,-3px); box-shadow:9px 9px 0 rgba(0,0,0,.55)}
+  .cover{aspect-ratio:3/4; border-bottom:3px solid #000; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; text-align:center; padding:14px}
+  .cover .gname{font-family:var(--pixel); font-size:15px; color:#fff; text-shadow:3px 3px 0 rgba(0,0,0,.7); line-height:1.4; position:relative; z-index:2}
+  .cover .gtag{position:absolute; top:10px; left:10px; z-index:3; background:#000; color:#fff}
+  .cover .fav{position:absolute; top:10px; right:10px; z-index:3; font-family:var(--pixel); font-size:11px; background:rgba(0,0,0,.5); padding:6px 7px; border:2px solid #000; cursor:pointer}
+  .cover::after{content:""; position:absolute; inset:0; background:repeating-linear-gradient(0deg,rgba(0,0,0,0) 0 3px, rgba(0,0,0,.18) 3px 4px); z-index:1}
+  .cinfo{padding:16px; display:flex; flex-direction:column; gap:10px; flex:1}
+  .cinfo h4{font-family:var(--pixel); font-size:12px; line-height:1.5}
+  .meta{display:flex; gap:6px; flex-wrap:wrap}
+  .plat{font-family:var(--pixel); font-size:8px; color:var(--dim); border:2px solid var(--line); padding:4px 6px}
+  .stars{color:var(--yellow); font-size:18px; letter-spacing:2px}
+  .cbottom{display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:6px}
+  .cprice{font-family:var(--pixel); font-size:14px; color:var(--yellow)}
+  .addbtn{font-family:var(--pixel); font-size:9px; background:var(--green); color:#000; border:3px solid #000; padding:9px 10px; cursor:pointer; box-shadow:3px 3px 0 rgba(0,0,0,.6)}
+  .addbtn:hover{background:var(--cyan)}
+
+  /* HARDWARE BANNER */
+  .hw{background:linear-gradient(120deg,#2a1450,#11233f); border:3px solid #000; box-shadow:8px 8px 0 rgba(0,0,0,.6); padding:40px; display:grid; grid-template-columns:1.1fr .9fr; gap:32px; align-items:center}
+  .hw h2{font-family:var(--pixel); font-size:28px; line-height:1.3; text-shadow:4px 4px 0 #000; margin-bottom:16px}
+  .hw h2 span{color:var(--cyan)}
+  .hw p{font-size:23px; color:var(--dim); margin-bottom:24px; max-width:420px}
+  .hwcards{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  .hwcard{background:#0d0a1a; border:3px solid #000; padding:18px; text-align:center}
+  .hwcard .hwname{font-family:var(--pixel); font-size:11px; margin-bottom:10px; color:var(--cyan)}
+  .hwcard .hwbox{height:80px; border:3px solid #000; margin-bottom:12px}
+  .hwcard .hwprice{font-family:var(--pixel); font-size:12px; color:var(--yellow)}
+
+  /* GOODIES strip */
+  .goodies{display:grid; grid-template-columns:repeat(4,1fr); gap:18px}
+  .good{border:3px solid #000; box-shadow:5px 5px 0 rgba(0,0,0,.5); padding:0; overflow:hidden; background:var(--panel)}
+  .good .gimg{height:130px; border-bottom:3px solid #000; display:flex; align-items:center; justify-content:center; font-family:var(--pixel); font-size:11px; color:#000; text-align:center; padding:10px}
+  .good .gb{padding:14px; display:flex; align-items:center; justify-content:space-between}
+  .good .gb h4{font-family:var(--pixel); font-size:10px} .good .gb b{font-family:var(--pixel); font-size:12px; color:var(--yellow)}
+
+  /* NEWSLETTER */
+  .club{background:var(--yellow); color:#000; border:3px solid #000; box-shadow:8px 8px 0 rgba(0,0,0,.6); padding:46px; text-align:center}
+  .club h2{font-family:var(--pixel); font-size:28px; margin-bottom:14px}
+  .club p{font-size:24px; max-width:540px; margin:0 auto 26px}
+  .club form{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+  .club input{background:#fff; border:3px solid #000; padding:13px 16px; font-family:var(--body); font-size:21px; min-width:280px; box-shadow:4px 4px 0 rgba(0,0,0,.4)}
+
+  /* FOOTER */
+  footer{background:var(--bg2); border-top:3px solid #000; padding:48px 0 30px; margin-top:10px}
+  .fcols{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:30px; margin-bottom:34px}
+  .fcols h5{font-family:var(--pixel); font-size:11px; color:var(--cyan); margin-bottom:16px}
+  .fcols a{display:block; color:var(--dim); font-size:20px; margin-bottom:9px}
+  .fcols a:hover{color:var(--ink)}
+  .fbtm{border-top:3px solid var(--line); padding-top:22px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family:var(--pixel); font-size:9px; color:var(--dim)}
+
+  @media(max-width:900px){
+    .hero-grid,.hw{grid-template-columns:1fr} .cats,.grid,.goodies{grid-template-columns:1fr 1fr}
+    nav.links,.search{display:none} .hero h1{font-size:34px}
+  }
+</style>
+</head>
+<body data-screen-label="Variant A — Arcade Home">
+
+  <div class="marquee"><div>
+    <span>★ FREE SHIPPING OVER $60</span><span>★ NEW DROPS EVERY FRIDAY</span><span>★ TRADE IN YOUR OLD CARTRIDGES</span><span>★ MEMBERS GET 2X COINS</span>
+    <span>★ FREE SHIPPING OVER $60</span><span>★ NEW DROPS EVERY FRIDAY</span><span>★ TRADE IN YOUR OLD CARTRIDGES</span><span>★ MEMBERS GET 2X COINS</span>
+  </div></div>
+
+  <header>
+    <div class="wrap nav">
+      <a class="logo" href="#"><b>K.O</b><i>GAMES</i></a>
+      <nav class="links">
+        <a href="#games">Games</a><a href="#hw">Consoles</a><a href="#games">Accessories</a><a href="#goodies">Goodies</a><a href="#deals">Deals</a>
+      </nav>
+      <div class="search"><input placeholder="Search games, consoles…" /></div>
+      <div class="hicons">
+        <div class="icbtn">PLAYER 1</div>
+        <a class="icbtn" href="ko-arcade-product.html">CART<span class="count">3</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">▶ FEATURED · GAME OF THE WEEK</span>
+        <h1><span class="hl">NEON</span> <span class="hl2">DRIFT</span><br/>RACE THE NIGHT</h1>
+        <p>Burn rubber through a synth-soaked city in this high-octane arcade racer. Out now on every system.</p>
+        <div class="hero-cta">
+          <a class="btn pink" href="ko-arcade-product.html">INSERT COIN ▸ BUY</a>
+          <a class="btn cyan" href="ko-arcade-product.html">VIEW GAME</a>
+          <span class="price-tag"><s>$59.99</s> $49.99</span>
+        </div>
+        <div class="hstats">
+          <div class="hstat"><b>4.9★</b><span>12.4k reviews</span></div>
+          <div class="hstat"><b>1–4P</b><span>Local + Online</span></div>
+          <div class="hstat"><b>4K60</b><span>HDR Ready</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="cab">
+          <div class="screen">
+            <div class="sun"></div>
+            <div class="road"></div>
+            <div class="title">NEON DRIFT</div>
+          </div>
+          <div class="knobs"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section>
+    <div class="wrap">
+      <div class="shead"><h2>SHOP BY<span class="dot"> ▸</span> CATEGORY</h2><a href="#games">ALL DEPARTMENTS</a></div>
+      <div class="cats">
+        <div class="cat c1"><span class="ic">●</span><h3>VIDEO GAMES</h3><p>1,200+ titles · PC &amp; console</p></div>
+        <div class="cat c2"><span class="ic">▣</span><h3>CONSOLES</h3><p>Next-gen &amp; retro hardware</p></div>
+        <div class="cat c3"><span class="ic">✚</span><h3>ACCESSORIES</h3><p>Pads, sticks &amp; headsets</p></div>
+        <div class="cat c4"><span class="ic">★</span><h3>GOODIES</h3><p>Pins, plush &amp; posters</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT GRID -->
+  <section id="games">
+    <div class="wrap">
+      <div class="shead"><h2>NEW<span class="dot"> ▸</span> CARTRIDGES</h2><a href="#">SEE ALL 1200 ▸</a></div>
+      <div class="grid">
+
+        <a class="card" href="ko-arcade-product.html">
+          <div class="cover" style="background:linear-gradient(160deg,#ff2e63,#7a1238)">
+            <span class="tag gtag" style="background:#000;color:var(--yellow)">RACING</span>
+            <span class="fav">♡</span><span class="gname">NEON<br/>DRIFT</span>
+          </div>
+          <div class="cinfo"><h4>Neon Drift</h4>
+            <div class="meta"><span class="plat">PS5</span><span class="plat">XBX</span><span class="plat">PC</span></div>
+            <div class="stars">★★★★★</div>
+            <div class="cbottom"><span class="cprice">$49.99</span><span class="addbtn">+ CART</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="ko-arcade-product.html">
+          <div class="cover" style="background:linear-gradient(160deg,#3a7bff,#0c2a66)">
+            <span class="tag gtag" style="background:#000;color:var(--cyan)">RPG</span>
+            <span class="fav">♡</span><span class="gname">PIXEL<br/>QUEST IV</span>
+          </div>
+          <div class="cinfo"><h4>Pixel Quest IV</h4>
+            <div class="meta"><span class="plat">SWITCH</span><span class="plat">PC</span></div>
+            <div class="stars">★★★★☆</div>
+            <div class="cbottom"><span class="cprice">$39.99</span><span class="addbtn">+ CART</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="ko-arcade-product.html">
+          <div class="cover" style="background:linear-gradient(160deg,#3ddc84,#0c5232)">
+            <span class="tag gtag" style="background:#000;color:var(--green)">SHOOTER</span>
+            <span class="fav">♡</span><span class="gname">GALAXY<br/>RAIDERS</span>
+          </div>
+          <div class="cinfo"><h4>Galaxy Raiders</h4>
+            <div class="meta"><span class="plat">PS5</span><span class="plat">PC</span></div>
+            <div class="stars">★★★★★</div>
+            <div class="cbottom"><span class="cprice">$59.99</span><span class="addbtn">+ CART</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="ko-arcade-product.html">
+          <div class="cover" style="background:linear-gradient(160deg,#ffd23f,#a3640a)">
+            <span class="tag gtag" style="background:#000;color:#fff">FIGHTING</span>
+            <span class="fav">♡</span><span class="gname" style="color:#1a1430;text-shadow:2px 2px 0 #fff">KOMBAT<br/>FURY</span>
+          </div>
+          <div class="cinfo"><h4>Kombat Fury</h4>
+            <div class="meta"><span class="plat">PS5</span><span class="plat">XBX</span></div>
+            <div class="stars">★★★★☆</div>
+            <div class="cbottom"><span class="cprice">$44.99</span><span class="addbtn">+ CART</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="ko-arcade-product.html">
+          <div class="cover" style="background:linear-gradient(160deg,#8a5cff,#2a1063)">
+            <span class="tag gtag" style="background:#000;color:var(--purple)">ADVENTURE</span>
+            <span class="fav">♡</span><span class="gname">STAR<br/>VOYAGER</span>
+          </div>
+          <div class="cinfo"><h4>Star Voyager</h4>
+            <div class="meta"><span class="plat">SWITCH</span><span class="plat">PC</span></div>
+            <div class="stars">★★★★★</div>
+            <div class="cbottom"><span class="cprice">$54.99</span><span class="addbtn">+ CART</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="ko-arcade-product.html">
+          <div class="cover" style="background:linear-gradient(160deg,#21e6c1,#0a5247)">
+            <span class="tag gtag" style="background:#000;color:#fff">ARCADE</span>
+            <span class="fav">♡</span><span class="gname" style="color:#0d2b26;text-shadow:2px 2px 0 #fff">BLOCK<br/>BREAKER DX</span>
+          </div>
+          <div class="cinfo"><h4>Block Breaker DX</h4>
+            <div class="meta"><span class="plat">ALL</span></div>
+            <div class="stars">★★★★☆</div>
+            <div class="cbottom"><span class="cprice">$19.99</span><span class="addbtn">+ CART</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="ko-arcade-product.html">
+          <div class="cover" style="background:linear-gradient(160deg,#ff7b3f,#7a2f0c)">
+            <span class="tag gtag" style="background:#000;color:#fff">ROGUELIKE</span>
+            <span class="fav">♡</span><span class="gname">DUNGEON<br/>LOOP</span>
+          </div>
+          <div class="cinfo"><h4>Dungeon Loop</h4>
+            <div class="meta"><span class="plat">PC</span><span class="plat">SWITCH</span></div>
+            <div class="stars">★★★★★</div>
+            <div class="cbottom"><span class="cprice">$24.99</span><span class="addbtn">+ CART</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="ko-arcade-product.html">
+          <div class="cover" style="background:linear-gradient(160deg,#e83fa0,#5a0c3c)">
+            <span class="tag gtag" style="background:#000;color:#fff">RACING</span>
+            <span class="fav">♡</span><span class="gname">TURBO KART<br/>MANIA</span>
+          </div>
+          <div class="cinfo"><h4>Turbo Kart Mania</h4>
+            <div class="meta"><span class="plat">SWITCH</span></div>
+            <div class="stars">★★★★☆</div>
+            <div class="cbottom"><span class="cprice">$34.99</span><span class="addbtn">+ CART</span></div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HARDWARE -->
+  <section id="hw">
+    <div class="wrap">
+      <div class="hw">
+        <div>
+          <span class="tag" style="background:var(--cyan);color:#000">HARDWARE DROP</span>
+          <h2 style="margin-top:16px">LEVEL UP YOUR<br/><span>BATTLE STATION</span></h2>
+          <p>Next-gen consoles and retro classics, fully tested and ready to plug in. Bundles available with 2 games.</p>
+          <a class="btn green" href="#">SHOP CONSOLES ▸</a>
+        </div>
+        <div class="hwcards">
+          <div class="hwcard"><div class="hwname">PIXELSTATION 5</div><div class="hwbox" style="background:linear-gradient(160deg,#3a7bff,#0c2a66)"></div><div class="hwprice">$499</div></div>
+          <div class="hwcard"><div class="hwname">K.O SWITCH</div><div class="hwbox" style="background:linear-gradient(160deg,#ff2e63,#7a1238)"></div><div class="hwprice">$299</div></div>
+          <div class="hwcard"><div class="hwname">MEGABOX SERIES K</div><div class="hwbox" style="background:linear-gradient(160deg,#3ddc84,#0c5232)"></div><div class="hwprice">$449</div></div>
+          <div class="hwcard"><div class="hwname">RETRO MINI '88</div><div class="hwbox" style="background:linear-gradient(160deg,#ffd23f,#a3640a)"></div><div class="hwprice">$89</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOODIES -->
+  <section id="goodies">
+    <div class="wrap">
+      <div class="shead"><h2>LOOT &amp;<span class="dot"> ▸</span> GOODIES</h2><a href="#">BROWSE MERCH ▸</a></div>
+      <div class="goodies">
+        <div class="good"><div class="gimg" style="background:var(--pink)">ENAMEL PIN SET</div><div class="gb"><h4>Boss Pins ×6</h4><b>$14</b></div></div>
+        <div class="good"><div class="gimg" style="background:var(--cyan)">8-BIT PLUSH</div><div class="gb"><h4>Slime Plush</h4><b>$22</b></div></div>
+        <div class="good"><div class="gimg" style="background:var(--yellow)">A1 POSTER</div><div class="gb"><h4>Neon Drift</h4><b>$18</b></div></div>
+        <div class="good"><div class="gimg" style="background:var(--purple);color:#fff">SNAPBACK CAP</div><div class="gb"><h4>K.O Crew</h4><b>$28</b></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLUB -->
+  <section id="deals">
+    <div class="wrap">
+      <div class="club">
+        <h2>JOIN THE K.O CLUB</h2>
+        <p>Get 2× coins, early drops and members-only deals. Enter your email to continue.</p>
+        <form onsubmit="return false">
+          <input placeholder="player@email.com" />
+          <button class="btn pink" type="submit">PRESS START ▸</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="fcols">
+        <div>
+          <a class="logo" href="#" style="font-size:18px"><b>K.O</b><i>GAMES</i></a>
+          <p style="color:var(--dim); margin-top:16px; max-width:280px">The arcade reborn. New &amp; retro games, hardware and loot since 1988.</p>
+        </div>
+        <div><h5>SHOP</h5><a href="#">Video Games</a><a href="#">Consoles</a><a href="#">Accessories</a><a href="#">Goodies</a></div>
+        <div><h5>SUPPORT</h5><a href="#">Track Order</a><a href="#">Returns</a><a href="#">Trade-In</a><a href="#">Contact</a></div>
+        <div><h5>K.O CLUB</h5><a href="#">Rewards</a><a href="#">Gift Cards</a><a href="#">Events</a><a href="#">Careers</a></div>
+      </div>
+      <div class="fbtm"><span>© 1988–2026 K.O GAMES</span><span>PLAYER 1 · READY</span></div>
+    </div>
+  </footer>
+
+</body>
+</html>

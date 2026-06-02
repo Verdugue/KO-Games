@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>K.O GAMES — Neon Synthwave</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0a0118; --bg2:#10052b; --card:rgba(35,8,72,.55); --line:rgba(166,75,255,.32);
+    --ink:#f4ecff; --dim:#b59ad8;
+    --pink:#ff3ca6; --magenta:#ff2cdf; --cyan:#00f0ff; --purple:#a64bff; --sun:#ff8a3d; --yellow:#ffd23f;
+    --disp:'Orbitron', sans-serif; --body:'Rajdhani', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg); color:var(--ink); font-family:var(--body); font-size:18px; line-height:1.4; overflow-x:hidden}
+  body::before{content:""; position:fixed; inset:0; z-index:-2; background:
+    radial-gradient(900px 500px at 50% -8%, rgba(255,60,166,.28), transparent 60%),
+    radial-gradient(700px 500px at 90% 100%, rgba(0,240,255,.16), transparent 60%),
+    radial-gradient(700px 500px at 5% 70%, rgba(166,75,255,.18), transparent 60%), var(--bg)}
+  a{color:inherit; text-decoration:none}
+  .wrap{max-width:1280px; margin:0 auto; padding:0 28px}
+  .disp{font-family:var(--disp)}
+  .glow-c{color:var(--cyan); text-shadow:0 0 14px rgba(0,240,255,.7)}
+  .glow-p{color:var(--pink); text-shadow:0 0 14px rgba(255,60,166,.7)}
+  .neon-btn{font-family:var(--disp); font-weight:700; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; cursor:pointer;
+    padding:14px 26px; border-radius:40px; border:1.5px solid var(--cyan); color:var(--cyan); background:rgba(0,240,255,.06);
+    box-shadow:0 0 18px rgba(0,240,255,.35), inset 0 0 18px rgba(0,240,255,.12); transition:.2s; display:inline-block}
+  .neon-btn:hover{background:var(--cyan); color:#05021a; box-shadow:0 0 30px rgba(0,240,255,.7)}
+  .neon-btn.pink{border-color:var(--pink); color:var(--pink); background:rgba(255,60,166,.07); box-shadow:0 0 18px rgba(255,60,166,.4), inset 0 0 18px rgba(255,60,166,.12)}
+  .neon-btn.pink:hover{background:var(--pink); color:#fff; box-shadow:0 0 30px rgba(255,60,166,.8)}
+  .neon-btn.solid{background:linear-gradient(90deg,var(--pink),var(--purple)); border:none; color:#fff; box-shadow:0 0 26px rgba(255,60,166,.5)}
+  .chip{font-family:var(--disp); font-size:11px; letter-spacing:2px; text-transform:uppercase; padding:7px 14px; border-radius:30px; border:1px solid var(--line); color:var(--dim)}
+
+  /* TOPBAR */
+  .topbar{text-align:center; font-family:var(--disp); font-size:11px; letter-spacing:3px; padding:9px; color:var(--cyan);
+    border-bottom:1px solid var(--line); background:rgba(255,44,223,.06)}
+  /* HEADER */
+  header{position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:rgba(10,1,24,.72); border-bottom:1px solid var(--line)}
+  .nav{display:flex; align-items:center; gap:26px; padding:18px 0}
+  .logo{font-family:var(--disp); font-weight:900; font-size:24px; letter-spacing:2px; display:flex; align-items:center; gap:8px}
+  .logo .ko{background:linear-gradient(135deg,var(--pink),var(--purple)); -webkit-background-clip:text; background-clip:text; color:transparent}
+  .logo .g{color:var(--cyan); text-shadow:0 0 16px rgba(0,240,255,.6)}
+  nav.links{display:flex; gap:24px; margin-left:10px}
+  nav.links a{font-family:var(--disp); font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--dim); padding-bottom:3px; border-bottom:2px solid transparent}
+  nav.links a:hover{color:var(--ink); border-color:var(--pink)}
+  .search{margin-left:auto; display:flex; align-items:center; gap:10px; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:30px; padding:10px 18px; min-width:240px}
+  .search input{background:none; border:none; outline:none; color:var(--ink); font-family:var(--body); font-size:17px; font-weight:500; width:100%}
+  .search input::placeholder{color:#7c6caf}
+  .hicons{display:flex; gap:12px; align-items:center}
+  .icbtn{font-family:var(--disp); font-size:11px; letter-spacing:1px; padding:11px 14px; border-radius:30px; border:1px solid var(--line); position:relative; cursor:pointer; color:var(--dim)}
+  .icbtn .count{position:absolute; top:-8px; right:-8px; background:var(--pink); color:#fff; border-radius:50%; width:20px; height:20px; display:grid; place-items:center; font-size:11px; box-shadow:0 0 12px rgba(255,60,166,.8)}
+
+  /* HERO */
+  .hero{position:relative; text-align:center; padding:70px 0 200px; overflow:hidden}
+  .sun{position:absolute; left:50%; top:90px; transform:translateX(-50%); width:380px; height:380px; border-radius:50%;
+    background:linear-gradient(180deg,#fff3a0 0%,var(--yellow) 22%,var(--sun) 48%,var(--pink) 72%,var(--magenta) 100%); z-index:-1;
+    box-shadow:0 0 120px rgba(255,60,166,.45)}
+  .sun::after{content:""; position:absolute; inset:0; border-radius:50%; background:repeating-linear-gradient(0deg, transparent 0 22px, var(--bg) 22px 30px); mask:linear-gradient(180deg, transparent 50%, #000 50%)}
+  .floor{position:absolute; left:-10%; right:-10%; bottom:0; height:230px; z-index:-1;
+    background:linear-gradient(180deg, transparent, rgba(166,75,255,.12)),
+      repeating-linear-gradient(90deg, rgba(0,240,255,.5) 0 2px, transparent 2px 64px),
+      repeating-linear-gradient(0deg, rgba(0,240,255,.5) 0 2px, transparent 2px 46px);
+    transform:perspective(420px) rotateX(70deg); transform-origin:bottom; opacity:.6;
+    mask:linear-gradient(180deg, transparent, #000 55%)}
+  .hero .tagline{font-family:var(--disp); font-size:12px; letter-spacing:5px; color:var(--cyan); margin-bottom:22px; text-transform:uppercase}
+  .hero h1{font-family:var(--disp); font-weight:900; font-size:80px; line-height:.98; letter-spacing:1px; margin-bottom:20px}
+  .hero h1 .l1{display:block; background:linear-gradient(180deg,#fff,#ffd9f3); -webkit-background-clip:text; background-clip:text; color:transparent}
+  .hero h1 .l2{display:block; background:linear-gradient(90deg,var(--cyan),var(--pink),var(--purple)); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(255,60,166,.5))}
+  .hero p{font-size:21px; color:var(--dim); max-width:520px; margin:0 auto 30px; font-weight:500}
+  .hero-cta{display:flex; gap:16px; justify-content:center; flex-wrap:wrap}
+
+  /* CATEGORY PILLS */
+  .catbar{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:-130px; position:relative; z-index:2}
+  .catpill{display:flex; align-items:center; gap:12px; padding:16px 24px; border-radius:50px; background:var(--card); border:1px solid var(--line); backdrop-filter:blur(10px); cursor:pointer; transition:.2s}
+  .catpill:hover{border-color:var(--cyan); box-shadow:0 0 22px rgba(0,240,255,.3); transform:translateY(-3px)}
+  .catpill .dot{width:12px; height:12px; border-radius:50%}
+  .catpill b{font-family:var(--disp); font-size:13px; letter-spacing:1px}
+
+  /* SECTION */
+  section{padding:70px 0}
+  .shead{display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:34px; gap:16px; flex-wrap:wrap}
+  .shead h2{font-family:var(--disp); font-weight:700; font-size:30px; letter-spacing:1px}
+  .shead .sub{color:var(--dim); font-size:18px; margin-top:6px}
+  .shead a{font-family:var(--disp); font-size:12px; letter-spacing:1.5px; color:var(--cyan); text-transform:uppercase}
+
+  /* PRODUCT GRID */
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px}
+  .card{border-radius:18px; overflow:hidden; background:var(--card); border:1px solid var(--line); backdrop-filter:blur(10px); transition:.25s; position:relative}
+  .card:hover{transform:translateY(-6px); border-color:var(--pink); box-shadow:0 16px 40px rgba(0,0,0,.5), 0 0 30px rgba(255,60,166,.25)}
+  .cover{aspect-ratio:3/4; position:relative; display:flex; align-items:flex-end; padding:18px; overflow:hidden}
+  .cover .ring{position:absolute; left:50%; top:38%; transform:translate(-50%,-50%); width:120px; height:120px; border-radius:50%;
+    background:radial-gradient(circle at 50% 38%, rgba(255,255,255,.5), transparent 60%); mix-blend-mode:overlay}
+  .cover .gname{font-family:var(--disp); font-weight:900; font-size:19px; line-height:1.05; position:relative; z-index:2; text-shadow:0 2px 16px rgba(0,0,0,.6)}
+  .cover .gtag{position:absolute; top:14px; left:14px; z-index:3; font-family:var(--disp); font-size:10px; letter-spacing:1.5px; padding:6px 11px; border-radius:20px; background:rgba(0,0,0,.45); border:1px solid rgba(255,255,255,.25); backdrop-filter:blur(6px)}
+  .cover::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 40%, rgba(8,1,20,.65))}
+  .cinfo{padding:18px}
+  .cinfo h4{font-family:var(--disp); font-weight:600; font-size:16px; margin-bottom:8px}
+  .cmeta{display:flex; align-items:center; gap:8px; margin-bottom:14px; flex-wrap:wrap}
+  .cmeta .plat{font-size:12px; font-weight:600; color:var(--dim); padding:3px 9px; border:1px solid var(--line); border-radius:14px}
+  .cmeta .st{color:var(--yellow); font-size:13px; margin-left:auto}
+  .cbottom{display:flex; align-items:center; justify-content:space-between}
+  .cprice{font-family:var(--disp); font-weight:700; font-size:20px; color:var(--cyan); text-shadow:0 0 12px rgba(0,240,255,.4)}
+  .cprice s{font-size:13px; color:#7c6caf; margin-right:7px; text-shadow:none}
+  .addbtn{font-family:var(--disp); font-size:11px; letter-spacing:1px; padding:9px 14px; border-radius:24px; border:1px solid var(--pink); color:var(--pink); cursor:pointer; transition:.2s}
+  .addbtn:hover{background:var(--pink); color:#fff; box-shadow:0 0 18px rgba(255,60,166,.6)}
+
+  /* HARDWARE SHOWCASE */
+  .hw{display:grid; grid-template-columns:1.2fr 1fr; gap:30px; align-items:center; border-radius:24px; padding:48px;
+    background:linear-gradient(120deg, rgba(166,75,255,.18), rgba(0,240,255,.08)); border:1px solid var(--line); position:relative; overflow:hidden}
+  .hw h2{font-family:var(--disp); font-weight:900; font-size:42px; line-height:1.05; margin-bottom:18px}
+  .hw p{font-size:20px; color:var(--dim); max-width:420px; margin-bottom:26px; font-weight:500}
+  .hwgrid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  .hwc{border-radius:16px; padding:22px; background:rgba(8,1,22,.55); border:1px solid var(--line); text-align:center; transition:.2s}
+  .hwc:hover{border-color:var(--cyan); box-shadow:0 0 22px rgba(0,240,255,.3)}
+  .hwc .hwbox{height:78px; border-radius:12px; margin-bottom:14px; box-shadow:0 8px 24px rgba(0,0,0,.4)}
+  .hwc .hwn{font-family:var(--disp); font-weight:600; font-size:14px; margin-bottom:6px}
+  .hwc .hwp{font-family:var(--disp); font-weight:700; color:var(--cyan); font-size:16px}
+
+  /* GOODIES */
+  .goodies{display:grid; grid-template-columns:repeat(4,1fr); gap:22px}
+  .good{border-radius:16px; overflow:hidden; background:var(--card); border:1px solid var(--line); transition:.2s}
+  .good:hover{transform:translateY(-4px); border-color:var(--purple)}
+  .good .gimg{height:150px; display:grid; place-items:center; font-family:var(--disp); font-weight:700; font-size:14px; letter-spacing:1px; color:#fff; text-shadow:0 2px 10px rgba(0,0,0,.5)}
+  .good .gb{padding:16px; display:flex; justify-content:space-between; align-items:center}
+  .good .gb h4{font-family:var(--disp); font-weight:600; font-size:14px} .good .gb b{font-family:var(--disp); color:var(--cyan)}
+
+  /* CLUB */
+  .club{border-radius:24px; padding:56px; text-align:center; background:linear-gradient(120deg, rgba(255,60,166,.16), rgba(166,75,255,.16)); border:1px solid var(--line); position:relative; overflow:hidden}
+  .club h2{font-family:var(--disp); font-weight:900; font-size:38px; margin-bottom:14px}
+  .club p{font-size:20px; color:var(--dim); max-width:520px; margin:0 auto 28px; font-weight:500}
+  .club form{display:flex; gap:14px; justify-content:center; flex-wrap:wrap}
+  .club input{background:rgba(8,1,22,.6); border:1px solid var(--line); border-radius:40px; padding:15px 24px; color:var(--ink); font-family:var(--body); font-size:18px; font-weight:500; min-width:300px; outline:none}
+  .club input:focus{border-color:var(--cyan); box-shadow:0 0 18px rgba(0,240,255,.3)}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line); padding:54px 0 30px; margin-top:20px; background:rgba(8,1,20,.5)}
+  .fcols{display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:30px; margin-bottom:36px}
+  .fcols p{color:var(--dim); margin-top:14px; max-width:280px; font-weight:500}
+  .fcols h5{font-family:var(--disp); font-size:13px; letter-spacing:1.5px; color:var(--cyan); margin-bottom:16px}
+  .fcols a{display:block; color:var(--dim); margin-bottom:10px; font-weight:500}
+  .fcols a:hover{color:var(--ink)}
+  .fbtm{border-top:1px solid var(--line); padding-top:22px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; color:var(--dim); font-family:var(--disp); font-size:12px; letter-spacing:1px}
+
+  @media(max-width:900px){ .hero h1{font-size:48px} .grid,.goodies{grid-template-columns:1fr 1fr} .hw,.hwgrid{grid-template-columns:1fr} nav.links,.search{display:none} }
+</style>
+</head>
+<body data-screen-label="Variant B — Synthwave Home">
+
+  <div class="topbar">▲ FREE EXPRESS SHIPPING OVER $60 · NEW DROPS EVERY FRIDAY NIGHT ▲</div>
+
+  <header>
+    <div class="wrap nav">
+      <a class="logo" href="#"><span class="ko">K.O</span><span class="g">GAMES</span></a>
+      <nav class="links"><a href="#games">Games</a><a href="#hw">Consoles</a><a href="#games">Accessories</a><a href="#goodies">Goodies</a><a href="#club">Deals</a></nav>
+      <div class="search"><span style="color:#7c6caf">⌕</span><input placeholder="Search the arcade…" /></div>
+      <div class="hicons"><div class="icbtn">SIGN IN</div><a class="icbtn" href="ko-neon-product.html">CART<span class="count">3</span></a></div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="sun"></div><div class="floor"></div>
+    <div class="wrap">
+      <div class="tagline">★ Game of the Week ★</div>
+      <h1><span class="l1">NEON DRIFT</span><span class="l2">RACE THE NIGHT</span></h1>
+      <p>Burn through a synth-soaked megacity in the arcade racer everyone's talking about. Out now on every system.</p>
+      <div class="hero-cta">
+        <a class="neon-btn solid" href="ko-neon-product.html">▸ Buy now — $49.99</a>
+        <a class="neon-btn" href="ko-neon-product.html">Watch trailer</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORY PILLS -->
+  <div class="wrap">
+    <div class="catbar">
+      <div class="catpill"><span class="dot" style="background:var(--pink); box-shadow:0 0 12px var(--pink)"></span><b>VIDEO GAMES</b></div>
+      <div class="catpill"><span class="dot" style="background:var(--cyan); box-shadow:0 0 12px var(--cyan)"></span><b>CONSOLES</b></div>
+      <div class="catpill"><span class="dot" style="background:var(--purple); box-shadow:0 0 12px var(--purple)"></span><b>ACCESSORIES</b></div>
+      <div class="catpill"><span class="dot" style="background:var(--yellow); box-shadow:0 0 12px var(--yellow)"></span><b>GOODIES</b></div>
+    </div>
+  </div>
+
+  <!-- PRODUCT GRID -->
+  <section id="games">
+    <div class="wrap">
+      <div class="shead"><div><h2>Trending Now</h2><div class="sub">Fresh drops the whole arcade is playing</div></div><a href="#">All games →</a></div>
+      <div class="grid">
+
+        <a class="card" href="ko-neon-product.html"><div class="cover" style="background:linear-gradient(160deg,#ff3ca6,#7a0f53)"><span class="ring"></span><span class="gtag">RACING</span><span class="gname">NEON<br/>DRIFT</span></div>
+          <div class="cinfo"><h4>Neon Drift</h4><div class="cmeta"><span class="plat">PS5</span><span class="plat">PC</span><span class="st">★ 4.9</span></div><div class="cbottom"><span class="cprice"><s>$59</s>$49.99</span><span class="addbtn">+ Cart</span></div></div></a>
+
+        <a class="card" href="ko-neon-product.html"><div class="cover" style="background:linear-gradient(160deg,#00f0ff,#0a4d7a)"><span class="ring"></span><span class="gtag">RPG</span><span class="gname" style="color:#05222b">PIXEL<br/>QUEST IV</span></div>
+          <div class="cinfo"><h4>Pixel Quest IV</h4><div class="cmeta"><span class="plat">SWITCH</span><span class="plat">PC</span><span class="st">★ 4.7</span></div><div class="cbottom"><span class="cprice">$39.99</span><span class="addbtn">+ Cart</span></div></div></a>
+
+        <a class="card" href="ko-neon-product.html"><div class="cover" style="background:linear-gradient(160deg,#a64bff,#3a1063)"><span class="ring"></span><span class="gtag">SHOOTER</span><span class="gname">GALAXY<br/>RAIDERS</span></div>
+          <div class="cinfo"><h4>Galaxy Raiders</h4><div class="cmeta"><span class="plat">PS5</span><span class="plat">PC</span><span class="st">★ 4.9</span></div><div class="cbottom"><span class="cprice">$59.99</span><span class="addbtn">+ Cart</span></div></div></a>
+
+        <a class="card" href="ko-neon-product.html"><div class="cover" style="background:linear-gradient(160deg,#ff8a3d,#7a2f0c)"><span class="ring"></span><span class="gtag">FIGHTING</span><span class="gname">KOMBAT<br/>FURY</span></div>
+          <div class="cinfo"><h4>Kombat Fury</h4><div class="cmeta"><span class="plat">PS5</span><span class="plat">XBX</span><span class="st">★ 4.6</span></div><div class="cbottom"><span class="cprice">$44.99</span><span class="addbtn">+ Cart</span></div></div></a>
+
+        <a class="card" href="ko-neon-product.html"><div class="cover" style="background:linear-gradient(160deg,#ff2cdf,#5a0c66)"><span class="ring"></span><span class="gtag">ADVENTURE</span><span class="gname">STAR<br/>VOYAGER</span></div>
+          <div class="cinfo"><h4>Star Voyager</h4><div class="cmeta"><span class="plat">SWITCH</span><span class="plat">PC</span><span class="st">★ 4.8</span></div><div class="cbottom"><span class="cprice">$54.99</span><span class="addbtn">+ Cart</span></div></div></a>
+
+        <a class="card" href="ko-neon-product.html"><div class="cover" style="background:linear-gradient(160deg,#2dd881,#0a5232)"><span class="ring"></span><span class="gtag">ARCADE</span><span class="gname" style="color:#05291c">BLOCK<br/>BREAKER DX</span></div>
+          <div class="cinfo"><h4>Block Breaker DX</h4><div class="cmeta"><span class="plat">ALL</span><span class="st">★ 4.5</span></div><div class="cbottom"><span class="cprice">$19.99</span><span class="addbtn">+ Cart</span></div></div></a>
+
+        <a class="card" href="ko-neon-product.html"><div class="cover" style="background:linear-gradient(160deg,#3a7bff,#0c2a66)"><span class="ring"></span><span class="gtag">ROGUELIKE</span><span class="gname">DUNGEON<br/>LOOP</span></div>
+          <div class="cinfo"><h4>Dungeon Loop</h4><div class="cmeta"><span class="plat">PC</span><span class="plat">SWITCH</span><span class="st">★ 4.9</span></div><div class="cbottom"><span class="cprice">$24.99</span><span class="addbtn">+ Cart</span></div></div></a>
+
+        <a class="card" href="ko-neon-product.html"><div class="cover" style="background:linear-gradient(160deg,#ffd23f,#a3640a)"><span class="ring"></span><span class="gtag">RACING</span><span class="gname" style="color:#3a2600">TURBO KART<br/>MANIA</span></div>
+          <div class="cinfo"><h4>Turbo Kart Mania</h4><div class="cmeta"><span class="plat">SWITCH</span><span class="st">★ 4.7</span></div><div class="cbottom"><span class="cprice">$34.99</span><span class="addbtn">+ Cart</span></div></div></a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HARDWARE -->
+  <section id="hw">
+    <div class="wrap">
+      <div class="hw">
+        <div>
+          <span class="chip" style="color:var(--cyan); border-color:var(--cyan)">HARDWARE DROP</span>
+          <h2 style="margin-top:18px">Level up your<br/><span class="glow-p">battle station</span></h2>
+          <p>Next-gen consoles &amp; retro classics, fully tested and glowing. Bundle any console with two games and save 15%.</p>
+          <a class="neon-btn pink" href="#">Shop consoles →</a>
+        </div>
+        <div class="hwgrid">
+          <div class="hwc"><div class="hwbox" style="background:linear-gradient(160deg,#00f0ff,#0a4d7a)"></div><div class="hwn">PixelStation 5</div><div class="hwp">$499</div></div>
+          <div class="hwc"><div class="hwbox" style="background:linear-gradient(160deg,#ff3ca6,#7a0f53)"></div><div class="hwn">K.O Switch</div><div class="hwp">$299</div></div>
+          <div class="hwc"><div class="hwbox" style="background:linear-gradient(160deg,#a64bff,#3a1063)"></div><div class="hwn">MegaBox Series K</div><div class="hwp">$449</div></div>
+          <div class="hwc"><div class="hwbox" style="background:linear-gradient(160deg,#ffd23f,#a3640a)"></div><div class="hwn">Retro Mini '88</div><div class="hwp">$89</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOODIES -->
+  <section id="goodies">
+    <div class="wrap">
+      <div class="shead"><div><h2>Loot &amp; Goodies</h2><div class="sub">Wear the win</div></div><a href="#">Browse merch →</a></div>
+      <div class="goodies">
+        <div class="good"><div class="gimg" style="background:linear-gradient(160deg,#ff3ca6,#a64bff)">ENAMEL PINS</div><div class="gb"><h4>Boss Pins ×6</h4><b>$14</b></div></div>
+        <div class="good"><div class="gimg" style="background:linear-gradient(160deg,#00f0ff,#3a7bff)">8-BIT PLUSH</div><div class="gb"><h4>Slime Plush</h4><b>$22</b></div></div>
+        <div class="good"><div class="gimg" style="background:linear-gradient(160deg,#ffd23f,#ff8a3d)">A1 POSTER</div><div class="gb"><h4>Neon Drift</h4><b>$18</b></div></div>
+        <div class="good"><div class="gimg" style="background:linear-gradient(160deg,#a64bff,#ff2cdf)">SNAPBACK CAP</div><div class="gb"><h4>K.O Crew</h4><b>$28</b></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLUB -->
+  <section id="club">
+    <div class="wrap">
+      <div class="club">
+        <span class="chip" style="color:var(--pink); border-color:var(--pink)">K.O CLUB</span>
+        <h2 style="margin-top:18px">Join the <span class="glow-c">night crew</span></h2>
+        <p>2× coins, early access to Friday drops and members-only prices. Plug in your email to continue.</p>
+        <form onsubmit="return false"><input placeholder="player@email.com" /><button class="neon-btn solid" type="submit">Press start →</button></form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="fcols">
+        <div><a class="logo" href="#" style="font-size:20px"><span class="ko">K.O</span><span class="g">GAMES</span></a><p>The arcade reborn in neon. New &amp; retro games, hardware and loot since 1988.</p></div>
+        <div><h5>SHOP</h5><a href="#">Video Games</a><a href="#">Consoles</a><a href="#">Accessories</a><a href="#">Goodies</a></div>
+        <div><h5>SUPPORT</h5><a href="#">Track Order</a><a href="#">Returns</a><a href="#">Trade-In</a><a href="#">Contact</a></div>
+        <div><h5>K.O CLUB</h5><a href="#">Rewards</a><a href="#">Gift Cards</a><a href="#">Events</a><a href="#">Careers</a></div>
+      </div>
+      <div class="fbtm"><span>© 1988–2026 K.O GAMES</span><span>MADE AFTER DARK</span></div>
+    </div>
+  </footer>
+
+</body>
+</html>

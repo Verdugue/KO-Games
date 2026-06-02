@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Neon Drift — K.O GAMES</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#fff6e9; --paper:#fffdf8; --ink:#211c33;
+    --red:#ff5d5d; --blue:#3a6bff; --yellow:#ffc62e; --green:#19c97a; --pink:#ff6fb5; --purple:#9a6bff; --orange:#ff8a3d; --cyan:#2fd3d3;
+    --disp:'Bungee', sans-serif; --body:'Fredoka', sans-serif;
+    --sh:6px 6px 0 var(--ink); --sh-sm:4px 4px 0 var(--ink); --sh-lg:9px 9px 0 var(--ink);
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--cream); color:var(--ink); font-family:var(--body); font-size:18px; font-weight:500; line-height:1.45;
+    background-image:radial-gradient(var(--ink) 1.4px, transparent 1.4px); background-size:26px 26px; background-position:-13px -13px}
+  body::before{content:""; position:fixed; inset:0; z-index:-1; background:var(--cream); opacity:.93}
+  a{color:inherit; text-decoration:none}
+  .wrap{max-width:1260px; margin:0 auto; padding:0 26px}
+  .btn{font-family:var(--disp); font-size:15px; cursor:pointer; padding:15px 26px; border-radius:16px; border:3px solid var(--ink); background:var(--yellow); color:var(--ink); box-shadow:var(--sh); transition:transform .08s, box-shadow .08s; display:inline-block; text-align:center}
+  .btn:hover{transform:translate(2px,2px); box-shadow:var(--sh-sm)} .btn:active{transform:translate(6px,6px); box-shadow:0 0 0 var(--ink)}
+  .btn.red{background:var(--red); color:#fff} .btn.green{background:var(--green); color:#fff}
+  .badge{font-family:var(--disp); font-size:11px; padding:7px 12px; border-radius:30px; border:3px solid var(--ink); background:#fff; box-shadow:var(--sh-sm); display:inline-block}
+
+  .topbar{background:var(--ink); color:#fff; text-align:center; font-family:var(--disp); font-size:12px; letter-spacing:1px; padding:10px}
+  .topbar span{color:var(--yellow)}
+  header{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:3px solid var(--ink)}
+  .nav{display:flex; align-items:center; gap:22px; padding:16px 0}
+  .logo{font-family:var(--disp); font-size:22px; display:flex; align-items:center; gap:7px}
+  .logo .ko{background:var(--red); color:#fff; padding:7px 10px; border:3px solid var(--ink); border-radius:12px; box-shadow:var(--sh-sm); transform:rotate(-3deg)}
+  nav.links{display:flex; gap:8px; margin-left:8px}
+  nav.links a{font-family:var(--body); font-weight:600; font-size:16px; padding:8px 14px; border-radius:12px}
+  nav.links a:hover{background:var(--yellow)}
+  .search{margin-left:auto; display:flex; align-items:center; gap:10px; background:#fff; border:3px solid var(--ink); border-radius:30px; padding:9px 18px; min-width:240px; box-shadow:var(--sh-sm)}
+  .search input{background:none; border:none; outline:none; font-family:var(--body); font-weight:500; font-size:16px; width:100%; color:var(--ink)}
+  .search input::placeholder{color:#b3a9bf}
+  .hicons{display:flex; gap:10px; align-items:center}
+  .icbtn{font-family:var(--disp); font-size:12px; padding:11px 14px; border-radius:14px; border:3px solid var(--ink); background:#fff; box-shadow:var(--sh-sm); position:relative; cursor:pointer}
+  .icbtn .count{position:absolute; top:-10px; right:-10px; background:var(--green); color:#fff; border:3px solid var(--ink); border-radius:50%; width:24px; height:24px; display:grid; place-items:center; font-size:11px}
+
+  .crumb{font-family:var(--body); font-weight:600; color:#7a7290; padding:24px 0 4px; font-size:15px}
+  .crumb a:hover{color:var(--blue)} .crumb span{color:var(--red)}
+
+  /* PRODUCT MAIN */
+  .pmain{display:grid; grid-template-columns:1fr 1fr; gap:44px; padding:18px 0 56px; align-items:start}
+  .gallery{position:sticky; top:96px}
+  .bigcover{aspect-ratio:1/1.04; border:4px solid var(--ink); border-radius:28px; box-shadow:var(--sh-lg); position:relative; overflow:hidden;
+    background:linear-gradient(150deg,var(--red),#c62f6e); display:flex; align-items:center; justify-content:center}
+  .bigcover .grip{position:absolute; top:0; left:20%; right:20%; height:7%; background:var(--ink)}
+  .bigcover .label{width:72%; height:48%; background:#fff; border:4px solid var(--ink); border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; transform:rotate(-2deg)}
+  .bigcover .label .t{font-family:var(--disp); font-size:44px; color:var(--ink); text-align:center; line-height:.92}
+  .bigcover .label .g{font-family:var(--disp); font-size:13px; color:var(--red)}
+  .bigcover .stk{position:absolute; top:-14px; right:-10px; width:84px; height:84px; background:var(--yellow); border:3px solid var(--ink); border-radius:50%; display:grid; place-items:center; font-family:var(--disp); font-size:13px; transform:rotate(12deg); box-shadow:var(--sh-sm)}
+  .thumbs{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:16px}
+  .thumb{aspect-ratio:1; border:3px solid var(--ink); border-radius:14px; cursor:pointer; box-shadow:var(--sh-sm); transition:.12s}
+  .thumb.active{outline:3px solid var(--blue); outline-offset:2px}
+
+  .pinfo .row1{display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap}
+  .pinfo .ptag{font-family:var(--disp); font-size:11px; padding:7px 12px; border-radius:30px; border:3px solid var(--ink); background:var(--yellow); box-shadow:var(--sh-sm)}
+  .pinfo .instock{font-family:var(--disp); font-size:11px; color:var(--green)}
+  .pinfo h1{font-family:var(--disp); font-size:50px; line-height:.98; margin-bottom:16px}
+  .pinfo h1 .a{color:var(--blue)} .pinfo h1 .b{color:var(--red)}
+  .raterow{display:flex; align-items:center; gap:12px; margin-bottom:20px; flex-wrap:wrap}
+  .stars{color:var(--orange); font-size:20px; letter-spacing:2px}
+  .raterow .rv{color:#7a7290; font-weight:600}
+  .pdesc{font-size:20px; color:#5a5270; margin-bottom:24px; max-width:520px}
+  .priceblk{display:flex; align-items:center; gap:14px; background:#fff; border:3px solid var(--ink); border-radius:18px; box-shadow:var(--sh); padding:16px 20px; margin-bottom:24px}
+  .priceblk .now{font-family:var(--disp); font-size:34px} .priceblk .was{font-family:var(--disp); font-size:17px; color:#b3a9bf; text-decoration:line-through}
+  .priceblk .save{font-family:var(--disp); font-size:11px; background:var(--green); color:#fff; border:3px solid var(--ink); border-radius:12px; padding:7px 11px; margin-left:auto}
+
+  .optlabel{font-family:var(--disp); font-size:12px; margin-bottom:11px; display:block}
+  .opts{display:flex; gap:11px; flex-wrap:wrap; margin-bottom:24px}
+  .opt{font-family:var(--disp); font-size:12px; padding:13px 16px; border-radius:14px; border:3px solid var(--ink); background:#fff; cursor:pointer; box-shadow:var(--sh-sm); transition:.1s; text-align:center}
+  .opt:hover{transform:translate(1px,1px); box-shadow:3px 3px 0 var(--ink)}
+  .opt.sel{background:var(--blue); color:#fff}
+  .opt small{display:block; font-family:var(--body); font-weight:600; font-size:11px; opacity:.7; margin-top:4px}
+
+  .buyrow{display:flex; gap:14px; align-items:stretch; margin-bottom:14px; flex-wrap:wrap}
+  .qty{display:flex; align-items:center; border:3px solid var(--ink); border-radius:16px; background:#fff; box-shadow:var(--sh-sm)}
+  .qty button{font-family:var(--disp); font-size:16px; background:none; border:none; color:var(--ink); padding:0 16px; cursor:pointer}
+  .qty span{font-family:var(--disp); padding:0 6px; min-width:34px; text-align:center}
+  .buyrow .btn{flex:1; min-width:160px}
+  .secure{color:#7a7290; font-weight:600; font-size:15px; margin-bottom:26px; line-height:1.9}
+  .secure b{color:var(--ink)}
+
+  .feats{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  .feat{display:flex; gap:12px; align-items:center; padding:16px; border:3px solid var(--ink); border-radius:16px; background:var(--paper); box-shadow:var(--sh-sm)}
+  .feat .fi{font-family:var(--disp); font-size:18px; width:46px; height:46px; border:3px solid var(--ink); border-radius:12px; display:grid; place-items:center; flex-shrink:0}
+  .feat b{font-family:var(--disp); font-size:13px; display:block; margin-bottom:2px} .feat span{color:#7a7290; font-size:15px}
+
+  /* TABS */
+  .tabsec{padding:46px 0; border-top:3px solid var(--ink)}
+  .tabs{display:flex; gap:12px; margin-bottom:26px; flex-wrap:wrap}
+  .tab{font-family:var(--disp); font-size:13px; padding:13px 22px; border-radius:14px; border:3px solid var(--ink); background:#fff; cursor:pointer; box-shadow:var(--sh-sm)}
+  .tab.active{background:var(--red); color:#fff}
+  .panel-body{display:none} .panel-body.show{display:block}
+  .panel-body p{font-size:20px; color:#5a5270; max-width:780px; margin-bottom:16px}
+  .specs{display:grid; grid-template-columns:1fr 1fr; border:3px solid var(--ink); border-radius:18px; overflow:hidden; max-width:780px; box-shadow:var(--sh)}
+  .specs div{padding:16px 20px; border-bottom:3px solid var(--ink)} .specs .k{font-family:var(--disp); font-size:12px; background:var(--paper)} .specs .v{color:#5a5270; background:#fff}
+  .review{border:3px solid var(--ink); border-radius:18px; background:var(--paper); padding:20px; margin-bottom:14px; box-shadow:var(--sh); max-width:780px}
+  .review .rh{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px}
+  .review .who{font-family:var(--disp); font-size:13px; color:var(--blue)} .review .st{color:var(--orange)}
+
+  /* RELATED */
+  .related{padding:46px 0; border-top:3px solid var(--ink)}
+  .related h2{font-family:var(--disp); font-size:28px; margin-bottom:26px} .related h2 em{font-style:normal; color:var(--blue)}
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px}
+  .card{background:var(--paper); border:3px solid var(--ink); border-radius:20px; box-shadow:var(--sh); overflow:hidden; display:flex; flex-direction:column; transition:transform .1s, box-shadow .1s}
+  .card:hover{transform:translate(-3px,-3px); box-shadow:var(--sh-lg)}
+  .cover{aspect-ratio:3/3.2; display:flex; align-items:center; justify-content:center; border-bottom:3px solid var(--ink); padding:16px}
+  .cover .gname{font-family:var(--disp); font-size:18px; color:#fff; text-align:center; line-height:1; text-shadow:3px 3px 0 rgba(0,0,0,.25)}
+  .cinfo{padding:16px; display:flex; flex-direction:column; gap:8px; flex:1}
+  .cinfo h4{font-family:var(--disp); font-size:14px}
+  .cbottom{display:flex; align-items:center; justify-content:space-between; margin-top:auto}
+  .cprice{font-family:var(--disp); font-size:16px}
+  .addbtn{font-family:var(--disp); font-size:10px; background:var(--green); color:#fff; border:3px solid var(--ink); border-radius:12px; padding:8px 11px; cursor:pointer; box-shadow:var(--sh-sm)}
+
+  footer{background:var(--ink); color:#fff; padding:42px 0 28px; margin-top:40px}
+  .fbtm{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family:var(--disp); font-size:12px; color:rgba(255,255,255,.6)}
+
+  @media(max-width:900px){ .pmain,.feats,.specs,.grid{grid-template-columns:1fr} .grid{grid-template-columns:1fr 1fr} nav.links,.search{display:none} .gallery{position:static} .pinfo h1{font-size:38px} }
+</style>
+</head>
+<body data-screen-label="Variant C — Pop Product">
+
+  <div class="topbar">FREE SHIPPING OVER $60 <span>·</span> 30-DAY RETURNS <span>·</span> MEMBERS GET 2× COINS</div>
+
+  <header>
+    <div class="wrap nav">
+      <a class="logo" href="ko-pop-home.html"><span class="ko">K.O</span><span>GAMES</span></a>
+      <nav class="links"><a href="ko-pop-home.html#games">Games</a><a href="ko-pop-home.html#hw">Consoles</a><a href="#">Accessories</a><a href="ko-pop-home.html#goodies">Goodies</a><a href="#">Deals</a></nav>
+      <div class="search"><span style="color:#b3a9bf">⌕</span><input placeholder="Search games &amp; gear…" /></div>
+      <div class="hicons"><div class="icbtn">SIGN IN</div><div class="icbtn">CART<span class="count">3</span></div></div>
+    </div>
+  </header>
+
+  <div class="wrap"><div class="crumb"><a href="ko-pop-home.html">Home</a> / <a href="ko-pop-home.html#games">Games</a> / Racing / <span>Neon Drift</span></div></div>
+
+  <div class="wrap">
+    <div class="pmain">
+      <div class="gallery">
+        <div class="bigcover">
+          <div class="grip"></div>
+          <div class="label"><div class="t">NEON<br/>DRIFT</div><div class="g">▸ ARCADE RACER</div></div>
+          <div class="stk">NEW!</div>
+        </div>
+        <div class="thumbs">
+          <div class="thumb active" style="background:linear-gradient(150deg,#ff5d5d,#c62f6e)"></div>
+          <div class="thumb" style="background:linear-gradient(150deg,#3a6bff,#2742b8)"></div>
+          <div class="thumb" style="background:linear-gradient(150deg,#9a6bff,#5e2fb8)"></div>
+          <div class="thumb" style="background:linear-gradient(150deg,#2fd3d3,#129a9a)"></div>
+        </div>
+      </div>
+
+      <div class="pinfo">
+        <div class="row1"><span class="ptag">★ GAME OF THE WEEK</span><span class="instock">● IN STOCK · SHIPS TODAY</span></div>
+        <h1><span class="a">NEON</span> <span class="b">DRIFT</span></h1>
+        <div class="raterow"><span class="stars">★★★★★</span><span class="rv">4.9 · 12,480 ratings</span></div>
+        <p class="pdesc">Burn rubber through a candy-bright megacity. 40 tracks, 24 cars, split-screen chaos and an online league that never sleeps.</p>
+        <div class="priceblk"><span class="now">$49.99</span><span class="was">$59.99</span><span class="save">SAVE $10</span></div>
+
+        <span class="optlabel">Platform</span>
+        <div class="opts">
+          <div class="opt sel">PS5<small>Disc</small></div>
+          <div class="opt">Xbox X|S<small>Disc</small></div>
+          <div class="opt">PC<small>Steam key</small></div>
+          <div class="opt">Switch<small>Cartridge</small></div>
+        </div>
+
+        <span class="optlabel">Edition</span>
+        <div class="opts">
+          <div class="opt sel">Standard<small>$49.99</small></div>
+          <div class="opt">Deluxe<small>$69.99</small></div>
+          <div class="opt">Collector<small>$129.99</small></div>
+        </div>
+
+        <div class="buyrow">
+          <div class="qty"><button>–</button><span>1</span><button>+</button></div>
+          <a class="btn green" href="#">+ ADD TO CART</a>
+          <a class="btn red" href="#">BUY NOW →</a>
+        </div>
+        <div class="secure">🚚 <b>Free 2-day shipping</b> · 30-day returns<br/>⭐ Earn <b>250 K.O coins</b> with this order</div>
+
+        <div class="feats">
+          <div class="feat"><span class="fi" style="background:var(--cyan)">▣</span><div><b>4K / 60FPS</b><span>HDR + ray tracing</span></div></div>
+          <div class="feat"><span class="fi" style="background:var(--pink)">⚇</span><div><b>1–4 Players</b><span>Local &amp; online</span></div></div>
+          <div class="feat"><span class="fi" style="background:var(--yellow)">⤓</span><div><b>Day-one patch</b><span>Free updates</span></div></div>
+          <div class="feat"><span class="fi" style="background:var(--green); color:#fff">★</span><div><b>K.O Club</b><span>2× coins today</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <section class="tabsec">
+    <div class="wrap">
+      <div class="tabs"><div class="tab active" data-t="desc">Description</div><div class="tab" data-t="spec">Specs</div><div class="tab" data-t="rev">Reviews</div></div>
+      <div class="panel-body show" id="desc">
+        <p>Neon Drift drops you into Vega City after dark — a candy-neon labyrinth of highways, tunnels and rooftop shortcuts. Master the drift, chain your boost and climb the ranked ladder.</p>
+        <p>Build your garage from 24 hand-tuned machines, paint them in the livery editor, and take them online into weekly seasons with real prizes. The single-player Gauntlet stacks 40 tracks into one unbroken night run.</p>
+        <p>Whether you're chasing leaderboards or wrecking friends in split-screen, Neon Drift is the arcade racer the genre's been missing.</p>
+      </div>
+      <div class="panel-body" id="spec">
+        <div class="specs">
+          <div class="k">Genre</div><div class="v">Arcade Racing</div>
+          <div class="k">Players</div><div class="v">1–4 local · up to 16 online</div>
+          <div class="k">Resolution</div><div class="v">Up to 4K / 60fps</div>
+          <div class="k">File Size</div><div class="v">48 GB</div>
+          <div class="k">Languages</div><div class="v">EN · FR · ES · DE · JP</div>
+          <div class="k">Release</div><div class="v">May 30, 2026</div>
+        </div>
+      </div>
+      <div class="panel-body" id="rev">
+        <div class="review"><div class="rh"><span class="who">PIXELPETE_88</span><span class="st">★★★★★</span></div><p style="margin:0">Best arcade racer in years. The drift physics just feel right and the soundtrack is unreal.</p></div>
+        <div class="review"><div class="rh"><span class="who">DRIFT_QUEEN</span><span class="st">★★★★★</span></div><p style="margin:0">Split-screen with my roommate every night. 40 tracks and not one of them is filler.</p></div>
+        <div class="review"><div class="rh"><span class="who">RETRO_RYU</span><span class="st">★★★★☆</span></div><p style="margin:0">Online needs more servers at peak but the game itself is a 10/10. Buy it.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section class="related">
+    <div class="wrap">
+      <h2>You might also <em>like</em></h2>
+      <div class="grid">
+        <a class="card" href="#"><div class="cover" style="background:linear-gradient(150deg,#ff6fb5,#c63d83)"><span class="gname">TURBO<br/>KART</span></div><div class="cinfo"><h4>Turbo Kart Mania</h4><div class="cbottom"><span class="cprice">$34.99</span><span class="addbtn">+ CART</span></div></div></a>
+        <a class="card" href="#"><div class="cover" style="background:linear-gradient(150deg,#19c97a,#0d8a52)"><span class="gname">GALAXY<br/>RAIDERS</span></div><div class="cinfo"><h4>Galaxy Raiders</h4><div class="cbottom"><span class="cprice">$59.99</span><span class="addbtn">+ CART</span></div></div></a>
+        <a class="card" href="#"><div class="cover" style="background:linear-gradient(150deg,#ffc62e,#e08e10)"><span class="gname" style="color:#211c33;text-shadow:2px 2px 0 #fff">KOMBAT<br/>FURY</span></div><div class="cinfo"><h4>Kombat Fury</h4><div class="cbottom"><span class="cprice">$44.99</span><span class="addbtn">+ CART</span></div></div></a>
+        <a class="card" href="#"><div class="cover" style="background:linear-gradient(150deg,#3a6bff,#2742b8)"><span class="gname">PIXEL<br/>QUEST IV</span></div><div class="cinfo"><h4>Pixel Quest IV</h4><div class="cbottom"><span class="cprice">$39.99</span><span class="addbtn">+ CART</span></div></div></a>
+      </div>
+    </div>
+  </section>
+
+  <footer><div class="wrap fbtm"><span>© 1988–2026 K.O GAMES</span><span>PLAY MORE · WIN MORE</span></div></footer>
+
+  <script>
+    document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+      document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+      document.querySelectorAll('.panel-body').forEach(x=>x.classList.remove('show'));
+      t.classList.add('active'); document.getElementById(t.dataset.t).classList.add('show');
+    }));
+    document.querySelectorAll('.opt').forEach(o=>o.addEventListener('click',function(){
+      [...this.parentElement.children].forEach(s=>s.classList.remove('sel')); this.classList.add('sel');
+    }));
+    document.querySelectorAll('.thumb').forEach(o=>o.addEventListener('click',function(){
+      document.querySelectorAll('.thumb').forEach(s=>s.classList.remove('active')); this.classList.add('active');
+    }));
+    let q=1; const qs=document.querySelector('.qty span'); const [minus,plus]=document.querySelectorAll('.qty button');
+    minus.onclick=()=>{q=Math.max(1,q-1); qs.textContent=q}; plus.onclick=()=>{q++; qs.textContent=q};
+  </script>
+</body>
+</html>
