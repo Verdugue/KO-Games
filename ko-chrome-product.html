@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Neon Drift — K.O GAMES (Y2K Chrome)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Exo+2:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box; margin:0; padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.5}
+  a{color:inherit; text-decoration:none}
+  img{display:block; max-width:100%}
+  .wrap{max-width:1260px; margin:0 auto; padding:0 26px}
+  .btn{display:inline-block; text-align:center; cursor:pointer; font-family:var(--disp); font-size:15px; padding:15px 26px; transition:transform .12s, box-shadow .12s, background .2s, color .2s}
+  .badge{display:inline-block; font-family:var(--disp); font-size:12px; padding:6px 12px}
+  .topbar{text-align:center; font-size:12px; padding:10px; letter-spacing:1px}
+  header.site{position:sticky; top:0; z-index:50}
+  .nav{display:flex; align-items:center; gap:22px; padding:16px 0}
+  .logo{font-family:var(--disp); font-size:22px; display:flex; align-items:center; gap:7px; white-space:nowrap}
+  nav.links{display:flex; gap:6px; margin-left:8px}
+  nav.links a{padding:8px 12px; font-size:15px}
+  .search{margin-left:auto; display:flex; align-items:center; gap:10px; padding:9px 16px; min-width:240px}
+  .search input{background:none; border:none; outline:none; font:inherit; font-size:15px; width:100%; color:inherit}
+  .hicons{display:flex; gap:10px; align-items:center}
+  .icbtn{font-family:var(--disp); font-size:12px; padding:10px 14px; position:relative; cursor:pointer}
+  .icbtn .count{position:absolute; top:-9px; right:-9px; width:22px; height:22px; border-radius:50%; display:grid; place-items:center; font-size:11px}
+  .hero{padding:56px 0 34px}
+  .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:44px; align-items:center}
+  .hero .kick{display:inline-block; font-family:var(--disp); font-size:13px; margin-bottom:18px}
+  .hero h1{font-family:var(--disp); font-size:62px; line-height:1; margin-bottom:20px}
+  .hero p{font-size:20px; max-width:440px; margin-bottom:26px}
+  .hero-cta{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+  .pill{font-family:var(--disp); font-size:14px; padding:10px 16px}
+  .pill s{opacity:.6; font-size:11px; margin-right:6px}
+  .hstats{display:flex; gap:14px; margin-top:28px; flex-wrap:wrap}
+  .hstat{padding:12px 16px}
+  .hstat b{font-family:var(--disp); font-size:18px; display:block} .hstat span{font-size:14px}
+  .herocard{position:relative}
+  .cart-art,.bigcover{aspect-ratio:1/1.02; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center}
+  .cart-art .label,.bigcover .label{width:72%; height:46%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px}
+  .label .t{font-family:var(--disp); font-size:34px; text-align:center; line-height:.95}
+  .label .g{font-family:var(--disp); font-size:12px}
+  .grip{position:absolute; top:0; left:18%; right:18%; height:8%}
+  .sticker{position:absolute; font-family:var(--disp); font-size:14px; width:80px; height:80px; display:grid; place-items:center; text-align:center; line-height:1}
+  .sticker.s1{top:-18px; right:-12px} .sticker.s2{bottom:-16px; left:-16px; width:90px; height:90px; font-size:13px}
+  section{padding:56px 0}
+  .shead{display:flex; align-items:center; justify-content:space-between; margin-bottom:26px; gap:14px; flex-wrap:wrap}
+  .shead h2{font-family:var(--disp); font-size:30px} .shead h2 em{font-style:normal}
+  .shead a{font-family:var(--disp); font-size:13px; padding:9px 14px}
+  .cats{display:grid; grid-template-columns:repeat(4,1fr); gap:18px}
+  .cat{padding:24px; cursor:pointer; transition:transform .12s, box-shadow .12s}
+  .cat .ic{font-size:24px; width:56px; height:56px; display:grid; place-items:center; margin-bottom:16px}
+  .cat h3{font-family:var(--disp); font-size:17px; margin-bottom:6px} .cat p{font-size:15px}
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px}
+  .card{display:flex; flex-direction:column; overflow:hidden; transition:transform .15s, box-shadow .15s}
+  .cover{aspect-ratio:3/3.4; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; padding:16px}
+  .cover .gname{font-family:var(--disp); font-size:21px; text-align:center; line-height:1; position:relative; z-index:1}
+  .cover .gtag{position:absolute; top:12px; left:12px; font-size:10px; padding:5px 10px; z-index:2}
+  .cover .fav{position:absolute; top:12px; right:12px; width:34px; height:34px; display:grid; place-items:center; font-size:16px; z-index:2}
+  .cinfo{padding:16px; display:flex; flex-direction:column; gap:8px; flex:1}
+  .cinfo h4{font-family:var(--disp); font-size:15px; line-height:1.15}
+  .cmeta{display:flex; gap:6px; align-items:center; flex-wrap:wrap}
+  .plat{font-size:10px; padding:3px 7px}
+  .st{margin-left:auto; font-size:12px}
+  .cbottom{display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:6px}
+  .cprice{font-family:var(--disp); font-size:18px} .cprice s{font-size:12px; opacity:.5; margin-right:6px}
+  .addbtn{font-family:var(--disp); font-size:11px; padding:8px 12px; cursor:pointer}
+  .hw{padding:42px; display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; position:relative; overflow:hidden}
+  .hw h2{font-family:var(--disp); font-size:36px; line-height:1.05; margin:16px 0} .hw h2 em{font-style:normal}
+  .hw p{font-size:18px; margin-bottom:24px; max-width:400px}
+  .hwgrid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  .hwc{padding:18px; text-align:center}
+  .hwbox{height:74px; margin-bottom:12px}
+  .hwn{font-family:var(--disp); font-size:13px; margin-bottom:5px} .hwp{font-family:var(--disp); font-size:15px}
+  .goodies{display:grid; grid-template-columns:repeat(4,1fr); gap:20px}
+  .good{overflow:hidden; transition:transform .15s}
+  .gimg{height:150px; display:grid; place-items:center; font-family:var(--disp); font-size:14px; text-align:center; padding:10px}
+  .gb{padding:14px; display:flex; justify-content:space-between; align-items:center; gap:10px}
+  .gb h4{font-family:var(--disp); font-size:13px} .gb b{font-family:var(--disp); font-size:15px}
+  .club{padding:50px; text-align:center; position:relative; overflow:hidden}
+  .club h2{font-family:var(--disp); font-size:36px; margin:16px 0 12px}
+  .club p{font-size:19px; max-width:520px; margin:0 auto 26px}
+  .club form{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+  .club input{padding:14px 20px; font:inherit; font-size:17px; min-width:290px; outline:none}
+  footer{padding:50px 0 28px; margin-top:40px}
+  .fcols{display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:30px; margin-bottom:34px}
+  .fcols p{margin-top:14px; max-width:280px}
+  .fcols h5{font-family:var(--disp); font-size:13px; margin-bottom:16px}
+  .fcols a:not(.logo){display:block; margin-bottom:9px}
+  .fbtm{padding-top:22px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:12px}
+  /* page produit */
+  .crumb{padding:24px 0 4px; font-size:15px}
+  .pmain{display:grid; grid-template-columns:1fr 1fr; gap:44px; padding:18px 0 56px; align-items:start}
+  .gallery{position:sticky; top:100px}
+  .bigcover .label .t{font-size:46px}
+  .bigcover .stk{position:absolute; top:14px; right:14px; width:84px; height:84px; display:grid; place-items:center; font-family:var(--disp); font-size:13px}
+  .thumbs{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:16px}
+  .thumb{aspect-ratio:1; cursor:pointer}
+  .row1{display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap}
+  .ptag{font-family:var(--disp); font-size:11px; padding:7px 12px}
+  .instock{font-family:var(--disp); font-size:11px}
+  .pinfo h1{font-family:var(--disp); font-size:52px; line-height:.98; margin-bottom:16px}
+  .raterow{display:flex; align-items:center; gap:12px; margin-bottom:20px; flex-wrap:wrap}
+  .stars{font-size:20px; letter-spacing:2px}
+  .pdesc{font-size:19px; margin-bottom:24px; max-width:520px}
+  .priceblk{display:flex; align-items:center; gap:14px; padding:16px 20px; margin-bottom:24px}
+  .priceblk .now{font-family:var(--disp); font-size:34px} .priceblk .was{font-family:var(--disp); font-size:17px; text-decoration:line-through; opacity:.5}
+  .priceblk .save{font-family:var(--disp); font-size:11px; padding:7px 11px; margin-left:auto}
+  .optlabel{font-family:var(--disp); font-size:12px; margin-bottom:11px; display:block}
+  .opts{display:flex; gap:11px; flex-wrap:wrap; margin-bottom:24px}
+  .opt{font-family:var(--disp); font-size:12px; padding:13px 16px; cursor:pointer; text-align:center; transition:.12s}
+  .opt small{display:block; font-family:var(--body); font-size:11px; opacity:.75; margin-top:4px}
+  .buyrow{display:flex; gap:14px; align-items:stretch; margin-bottom:14px; flex-wrap:wrap}
+  .qty{display:flex; align-items:center}
+  .qty button{font-family:var(--disp); font-size:16px; background:none; border:none; color:inherit; padding:0 16px; cursor:pointer; height:100%}
+  .qty span{font-family:var(--disp); padding:0 6px; min-width:34px; text-align:center}
+  .buyrow .btn{flex:1; min-width:160px}
+  .secure{font-size:15px; margin-bottom:26px; line-height:1.9}
+  .feats{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  .feat{display:flex; gap:12px; align-items:center; padding:16px}
+  .feat .fi{font-size:18px; width:46px; height:46px; display:grid; place-items:center; flex-shrink:0}
+  .feat b{font-family:var(--disp); font-size:13px; display:block; margin-bottom:2px} .feat span{font-size:15px}
+  .tabsec{padding:46px 0}
+  .tabs{display:flex; gap:12px; margin-bottom:26px; flex-wrap:wrap}
+  .tab{font-family:var(--disp); font-size:13px; padding:13px 22px; cursor:pointer}
+  .panel-body{display:none} .panel-body.show{display:block}
+  .panel-body p{font-size:19px; max-width:780px; margin-bottom:16px}
+  .specs{display:grid; grid-template-columns:1fr 1fr; overflow:hidden; max-width:780px}
+  .specs div{padding:16px 20px} .specs .k{font-family:var(--disp); font-size:12px}
+  .review{padding:20px; margin-bottom:14px; max-width:780px}
+  .review p{margin:0!important}
+  .review .rh{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px}
+  .review .who{font-family:var(--disp); font-size:13px}
+  .related{padding:46px 0}
+  .related h2{font-family:var(--disp); font-size:28px; margin-bottom:26px} .related h2 em{font-style:normal}
+  .related .cover{aspect-ratio:3/3.2}
+  footer .fbtm:only-child{padding-top:0}
+  @media(max-width:900px){
+    .hero-grid,.hw,.hwgrid,.pmain,.feats{grid-template-columns:1fr}
+    .cats,.grid,.goodies,.fcols{grid-template-columns:1fr 1fr}
+    nav.links,.search{display:none}
+    .hero h1{font-size:44px} .pinfo h1{font-size:38px}
+    .gallery{position:static}
+  }
+  @media(max-width:520px){ .specs{grid-template-columns:1fr} .hicons .icbtn:first-child{display:none} .club,.hw{padding:28px} }
+
+  :root{--bg:#e8eef6; --ink:#1b2a44; --aqua:#00a6ff; --pink:#ff3fa4; --silver:#c9d6e3; --disp:'Orbitron',sans-serif; --body:'Exo 2',sans-serif;
+    --gloss:linear-gradient(180deg,rgba(255,255,255,.95),rgba(232,239,247,.85)); --ombre:0 14px 34px -12px rgba(27,42,68,.35),inset 0 1px 0 #fff}
+  body{background:radial-gradient(900px 500px at 10% -10%,rgba(0,166,255,.22),transparent 60%),radial-gradient(800px 500px at 100% 20%,rgba(255,63,164,.16),transparent 60%),linear-gradient(180deg,#f2f6fb,#d9e3ef) fixed; font-weight:500}
+  .btn{border-radius:999px; color:var(--ink); background:var(--gloss); border:1px solid rgba(27,42,68,.18); box-shadow:var(--ombre); font-weight:800; letter-spacing:.06em; font-size:13px}
+  .btn:hover{transform:translateY(-2px)}
+  .btn.primary{color:#fff; border-color:#0077c8; background:linear-gradient(180deg,#7fdcff 0%,#19aef7 48%,#008ae6 52%,#36c0ff 100%); box-shadow:0 12px 26px -10px rgba(0,138,230,.8),inset 0 1px 0 rgba(255,255,255,.8); text-shadow:0 1px 1px rgba(0,60,120,.5)}
+  .badge{border-radius:999px; color:#fff; background:linear-gradient(180deg,#ff8fcb,#ff3fa4); font-weight:800; box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+  .topbar{background:linear-gradient(180deg,#2a3f63,#16233a); color:#cfe6ff; font-family:var(--disp); font-size:11px; letter-spacing:.18em}
+  .topbar span{color:var(--aqua)}
+  header.site{background:rgba(255,255,255,.7); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,.9); box-shadow:0 8px 30px -18px rgba(27,42,68,.5)}
+  .logo{font-weight:900; letter-spacing:.04em} .logo .ko{color:#fff; padding:6px 12px; border-radius:999px; background:linear-gradient(180deg,#7fdcff,#008ae6); box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+  nav.links a{border-radius:999px; font-weight:600} nav.links a:hover{background:rgba(0,166,255,.12); color:#006bb3}
+  .search{border-radius:999px; background:#fff; box-shadow:inset 0 2px 5px rgba(27,42,68,.15); border:1px solid #c5d2e0}
+  .icbtn{border-radius:999px; background:var(--gloss); border:1px solid rgba(27,42,68,.15); box-shadow:var(--ombre)}
+  .icbtn .count{background:linear-gradient(180deg,#ff8fcb,#ff3fa4); color:#fff; box-shadow:0 2px 6px rgba(255,63,164,.6)}
+  .hero .kick{color:#006bb3; letter-spacing:.2em; font-size:12px}
+  .hero h1{font-weight:900; font-size:64px; letter-spacing:.01em; background:linear-gradient(180deg,#7d95b3 0%,#1b2a44 46%,#0d1626 52%,#8ba4c1 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 2px 0 #fff)}
+  .hero h1 .a,.hero h1 .b{background:linear-gradient(180deg,#8fe2ff 0%,#0090f0 48%,#005fa8 52%,#5fd0ff 100%); -webkit-background-clip:text; background-clip:text; color:transparent}
+  .hero h1 .b{background-image:linear-gradient(180deg,#ffb3dc 0%,#ff3fa4 48%,#c2006e 52%,#ff7cc3 100%)}
+  .hero p{color:#4a5f7d}
+  .pill{border-radius:999px; color:#fff; background:linear-gradient(180deg,#9cf078,#3dbb1e); box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 8px 18px -8px rgba(61,187,30,.8)}
+  .hstat{border-radius:18px; background:var(--gloss); box-shadow:var(--ombre); border:1px solid #fff} .hstat span{color:#5f7392}
+  .cart-art{border-radius:44px; background:linear-gradient(160deg,rgba(127,220,255,.85),rgba(0,120,220,.75)); box-shadow:0 40px 70px -30px rgba(0,90,170,.7),inset 0 2px 0 rgba(255,255,255,.8),inset 0 -20px 40px rgba(0,40,100,.25); border:1px solid rgba(255,255,255,.7)}
+  .cart-art::before{content:""; position:absolute; inset:0; background:repeating-linear-gradient(90deg,rgba(255,255,255,.12) 0 2px,transparent 2px 14px)}
+  .cart-art::after{content:""; position:absolute; left:8%; right:8%; top:4%; height:30%; border-radius:40px 40px 50% 50%; background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,0))}
+  .grip{display:none}
+  .label{border-radius:28px; background:var(--gloss); box-shadow:var(--ombre); z-index:1}
+  .label .t{font-weight:900; color:var(--ink)} .label .g{color:#006bb3; letter-spacing:.1em}
+  .sticker{border-radius:50%; color:#fff; font-weight:900; background:radial-gradient(circle at 35% 30%,#ffc2e3,#ff3fa4 55%,#c2006e); box-shadow:0 12px 24px -8px rgba(194,0,110,.7)}
+  .sticker.s2{background:radial-gradient(circle at 35% 30%,#d5ff9c,#62d321 55%,#2f8a00)}
+  .shead h2{font-weight:900; letter-spacing:.02em} .shead h2 em{color:var(--aqua)}
+  .shead a{border-radius:999px; background:var(--gloss); box-shadow:var(--ombre); font-size:11px; letter-spacing:.1em}
+  .cat{border-radius:26px; color:#fff; background:linear-gradient(160deg,hsl(var(--h) 95% 68%),hsl(var(--h) 85% 42%)); box-shadow:0 18px 30px -16px hsl(var(--h) 80% 35%),inset 0 1px 0 rgba(255,255,255,.7); position:relative; overflow:hidden}
+  .cat::after{content:""; position:absolute; left:6%; right:6%; top:0; height:45%; border-radius:0 0 50% 50%; background:linear-gradient(180deg,rgba(255,255,255,.45),transparent)}
+  .cat:hover{transform:translateY(-4px)}
+  .cat .ic{border-radius:50%; background:rgba(255,255,255,.3); box-shadow:inset 0 1px 0 rgba(255,255,255,.8)} .cat p{opacity:.9}
+  .card{border-radius:26px; background:var(--gloss); box-shadow:var(--ombre); border:1px solid #fff} .card:hover{transform:translateY(-6px)}
+  .cover{margin:8px; border-radius:20px; background:linear-gradient(160deg,hsl(var(--h) 95% 68%),hsl(var(--h) 85% 40%))}
+  .cover::after{content:""; position:absolute; left:6%; right:6%; top:0; height:42%; border-radius:0 0 50% 50%; background:linear-gradient(180deg,rgba(255,255,255,.55),transparent)}
+  .cover .gname{color:#fff; font-weight:900; font-size:20px; letter-spacing:.04em; text-shadow:0 2px 6px rgba(0,0,0,.3)}
+  .cover .gtag{border-radius:999px; background:rgba(255,255,255,.85); font-family:var(--disp); font-weight:700; font-size:9px; letter-spacing:.1em}
+  .cover .fav{border-radius:50%; background:rgba(255,255,255,.85)}
+  .cinfo h4{font-weight:800; font-size:14px}
+  .plat{border-radius:999px; background:#dfe8f2; font-weight:700} .st{color:#e08a00; font-weight:700}
+  .cprice{font-weight:800} .addbtn{border-radius:999px; color:#fff; background:linear-gradient(180deg,#7fdcff,#008ae6); box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+  .hw{border-radius:36px; color:#fff; background:linear-gradient(160deg,#2a3f63,#0d1626); box-shadow:0 40px 70px -40px rgba(13,22,38,.9)}
+  .hw::after{content:""; position:absolute; right:-120px; top:-120px; width:360px; height:360px; border-radius:50%; background:radial-gradient(circle,rgba(0,166,255,.5),transparent 70%)}
+  .hw .badge{background:linear-gradient(180deg,#7fdcff,#008ae6)}
+  .hw h2{font-weight:900} .hw h2 em{color:#7fdcff} .hw p{color:#b8c8dd}
+  .hwc{border-radius:22px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); backdrop-filter:blur(6px); position:relative; z-index:1}
+  .hwbox{border-radius:16px; background:linear-gradient(160deg,hsl(var(--h) 95% 68%),hsl(var(--h) 85% 40%)); box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+  .hwp{color:#7fdcff}
+  .good{border-radius:26px; background:var(--gloss); box-shadow:var(--ombre)} .good:hover{transform:translateY(-4px)}
+  .gimg{margin:8px; border-radius:20px; color:#fff; font-weight:900; background:radial-gradient(circle at 30% 25%,hsl(var(--h) 95% 78%),hsl(var(--h) 85% 45%) 70%)}
+  .club{border-radius:40px; background:linear-gradient(160deg,#ffffff,#dbe6f2); box-shadow:var(--ombre); border:1px solid #fff}
+  .club h2{font-weight:900; color:var(--ink)}
+  .club input{border-radius:999px; border:1px solid #c5d2e0; background:#fff; box-shadow:inset 0 2px 5px rgba(27,42,68,.12)}
+  footer{background:linear-gradient(180deg,#16233a,#0b1220); color:#cfe0f5}
+  .fcols h5{color:#7fdcff; letter-spacing:.14em} .fcols a:not(.logo){color:#9fb3cc}
+  .fbtm{border-top:1px solid rgba(255,255,255,.12); font-family:var(--disp); color:#7d90ab; letter-spacing:.12em}
+  .crumb{color:#5f7392} .crumb span{color:var(--pink)}
+  .bigcover{border-radius:48px; background:linear-gradient(160deg,rgba(255,143,203,.9),rgba(194,0,110,.8)); box-shadow:0 40px 70px -30px rgba(194,0,110,.6),inset 0 2px 0 rgba(255,255,255,.8)}
+  .bigcover::after{content:""; position:absolute; left:8%; right:8%; top:4%; height:30%; border-radius:40px 40px 50% 50%; background:linear-gradient(180deg,rgba(255,255,255,.7),transparent)}
+  .bigcover .stk{border-radius:50%; color:#fff; font-weight:900; background:radial-gradient(circle at 35% 30%,#d5ff9c,#62d321 55%,#2f8a00); z-index:2}
+  .thumb{border-radius:20px; background:linear-gradient(160deg,hsl(var(--h) 95% 68%),hsl(var(--h) 85% 42%)); box-shadow:var(--ombre)} .thumb.active{outline:3px solid var(--aqua); outline-offset:3px}
+  .ptag{border-radius:999px; color:#fff; background:linear-gradient(180deg,#ff8fcb,#ff3fa4)} .instock{color:#2f9a10}
+  .pinfo h1{font-weight:900; background:linear-gradient(180deg,#7d95b3 0%,#1b2a44 46%,#0d1626 52%,#8ba4c1 100%); -webkit-background-clip:text; background-clip:text; color:transparent}
+  .stars{color:#f0a000} .rv,.pdesc{color:#4a5f7d}
+  .priceblk{border-radius:24px; background:var(--gloss); box-shadow:var(--ombre)} .priceblk .save{border-radius:999px; color:#fff; background:linear-gradient(180deg,#9cf078,#3dbb1e)}
+  .opt{border-radius:18px; background:var(--gloss); border:1px solid #c5d2e0; box-shadow:var(--ombre)} .opt.sel{color:#fff; background:linear-gradient(180deg,#7fdcff,#008ae6); border-color:#0077c8}
+  .qty{border-radius:999px; background:#fff; border:1px solid #c5d2e0}
+  .feat{border-radius:22px; background:var(--gloss); box-shadow:var(--ombre)} .feat .fi{border-radius:50%; color:#fff; background:linear-gradient(160deg,hsl(var(--h) 95% 68%),hsl(var(--h) 85% 42%))} .feat span{color:#5f7392}
+  .tab{border-radius:999px; background:var(--gloss); box-shadow:var(--ombre); font-size:12px} .tab.active{color:#fff; background:linear-gradient(180deg,#ff8fcb,#ff3fa4)}
+  .panel-body p{color:#4a5f7d}
+  .specs{border-radius:22px; background:var(--gloss); box-shadow:var(--ombre)} .specs div{border-bottom:1px solid #d5dfea} .specs .v{color:#4a5f7d}
+  .review{border-radius:22px; background:var(--gloss); box-shadow:var(--ombre)} .review .who{color:#006bb3} .review .st{color:#f0a000}
+  .related h2{font-weight:900} .related h2 em{color:var(--aqua)}
+</style>
+</head>
+<body data-screen-label="Y2K Chrome — Product">
+
+  <div class="topbar">FREE SHIPPING OVER $60 <span>·</span> NEW DROPS EVERY FRIDAY <span>·</span> MEMBERS GET 2× COINS</div>
+  <header class="site">
+    <div class="wrap nav">
+      <a class="logo" href="ko-chrome-home.html"><span class="ko">K.O</span><span class="g">GAMES</span></a>
+      <nav class="links"><a href="ko-chrome-home.html#games">Games</a><a href="ko-chrome-home.html#hw">Consoles</a><a href="ko-chrome-home.html#games">Accessories</a><a href="ko-chrome-home.html#goodies">Goodies</a><a href="ko-chrome-home.html#club">Deals</a></nav>
+      <div class="search"><span class="loupe">⌕</span><input placeholder="Search games &amp; gear…" /></div>
+      <div class="hicons"><a class="icbtn" href="#">SIGN IN</a><a class="icbtn" href="ko-chrome-product.html">CART<span class="count">3</span></a></div>
+    </div>
+  </header>
+
+  <div class="wrap"><div class="crumb"><a href="ko-chrome-home.html">Home</a> / <a href="ko-chrome-home.html#games">Games</a> / Racing / <span>Neon Drift</span></div></div>
+
+  <div class="wrap">
+    <div class="pmain">
+      <div class="gallery">
+        <div class="bigcover">
+          <div class="grip"></div>
+          <div class="label"><div class="t">NEON<br/>DRIFT</div><div class="g">▸ ARCADE RACER</div></div>
+          <div class="stk">NEW!</div>
+        </div>
+        <div class="thumbs">
+          <div class="thumb active" style="--h:0"></div><div class="thumb" style="--h:225"></div><div class="thumb" style="--h:265"></div><div class="thumb" style="--h:180"></div>
+        </div>
+      </div>
+
+      <div class="pinfo">
+        <div class="row1"><span class="ptag">★ GAME OF THE WEEK</span><span class="instock">● IN STOCK · SHIPS TODAY</span></div>
+        <h1><span class="a">NEON</span> <span class="b">DRIFT</span></h1>
+        <div class="raterow"><span class="stars">★★★★★</span><span class="rv">4.9 · 12,480 ratings</span></div>
+        <p class="pdesc">Burn rubber through a neon megacity. 40 tracks, 24 cars, split-screen chaos and an online league that never sleeps.</p>
+        <div class="priceblk"><span class="now">$49.99</span><span class="was">$59.99</span><span class="save">SAVE $10</span></div>
+
+        <span class="optlabel">Platform</span>
+        <div class="opts">
+          <div class="opt sel">PS5<small>Disc</small></div>
+          <div class="opt">Xbox X|S<small>Disc</small></div>
+          <div class="opt">PC<small>Steam key</small></div>
+          <div class="opt">Switch<small>Cartridge</small></div>
+        </div>
+
+        <span class="optlabel">Edition</span>
+        <div class="opts">
+          <div class="opt sel">Standard<small>$49.99</small></div>
+          <div class="opt">Deluxe<small>$69.99</small></div>
+          <div class="opt">Collector<small>$129.99</small></div>
+        </div>
+
+        <div class="buyrow">
+          <div class="qty"><button>–</button><span>1</span><button>+</button></div>
+          <a class="btn" href="#">+ ADD TO CART</a>
+          <a class="btn primary" href="#">BUY NOW →</a>
+        </div>
+        <div class="secure">🚚 <b>Free 2-day shipping</b> · 30-day returns<br/>⭐ Earn <b>250 K.O coins</b> with this order</div>
+
+        <div class="feats">
+          <div class="feat" style="--h:180"><span class="fi">▣</span><div><b>4K / 60FPS</b><span>HDR + ray tracing</span></div></div>
+          <div class="feat" style="--h:330"><span class="fi">⚇</span><div><b>1–4 Players</b><span>Local &amp; online</span></div></div>
+          <div class="feat" style="--h:45"><span class="fi">⤓</span><div><b>Day-one patch</b><span>Free updates</span></div></div>
+          <div class="feat" style="--h:150"><span class="fi">★</span><div><b>K.O Club</b><span>2× coins today</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <section class="tabsec">
+    <div class="wrap">
+      <div class="tabs"><div class="tab active" data-t="desc">Description</div><div class="tab" data-t="spec">Specs</div><div class="tab" data-t="rev">Reviews</div></div>
+      <div class="panel-body show" id="desc">
+        <p>Neon Drift drops you into Vega City after dark — a neon labyrinth of highways, tunnels and rooftop shortcuts. Master the drift, chain your boost and climb the ranked ladder.</p>
+        <p>Build your garage from 24 hand-tuned machines, paint them in the livery editor, and take them online into weekly seasons with real prizes. The single-player Gauntlet stacks 40 tracks into one unbroken night run.</p>
+        <p>Whether you're chasing leaderboards or wrecking friends in split-screen, Neon Drift is the arcade racer the genre's been missing.</p>
+      </div>
+      <div class="panel-body" id="spec">
+        <div class="specs">
+          <div class="k">Genre</div><div class="v">Arcade Racing</div>
+          <div class="k">Players</div><div class="v">1–4 local · up to 16 online</div>
+          <div class="k">Resolution</div><div class="v">Up to 4K / 60fps</div>
+          <div class="k">File Size</div><div class="v">48 GB</div>
+          <div class="k">Languages</div><div class="v">EN · FR · ES · DE · JP</div>
+          <div class="k">Release</div><div class="v">May 30, 2026</div>
+        </div>
+      </div>
+      <div class="panel-body" id="rev">
+        <div class="review"><div class="rh"><span class="who">PIXELPETE_88</span><span class="st">★★★★★</span></div><p>Best arcade racer in years. The drift physics just feel right and the soundtrack is unreal.</p></div>
+        <div class="review"><div class="rh"><span class="who">DRIFT_QUEEN</span><span class="st">★★★★★</span></div><p>Split-screen with my roommate every night. 40 tracks and not one of them is filler.</p></div>
+        <div class="review"><div class="rh"><span class="who">RETRO_RYU</span><span class="st">★★★★☆</span></div><p>Online needs more servers at peak but the game itself is a 10/10. Buy it.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section class="related">
+    <div class="wrap">
+      <h2>You might also <em>like</em></h2>
+      <div class="grid"><a class="card" href="#" style="--h:330"><div class="cover"><span class="gname">TURBO<br/>KART</span></div><div class="cinfo"><h4>Turbo Kart Mania</h4><div class="cbottom"><span class="cprice">$34.99</span><span class="addbtn">+ CART</span></div></div></a><a class="card" href="#" style="--h:150"><div class="cover"><span class="gname">GALAXY<br/>RAIDERS</span></div><div class="cinfo"><h4>Galaxy Raiders</h4><div class="cbottom"><span class="cprice">$59.99</span><span class="addbtn">+ CART</span></div></div></a><a class="card" href="#" style="--h:45"><div class="cover"><span class="gname">KOMBAT<br/>FURY</span></div><div class="cinfo"><h4>Kombat Fury</h4><div class="cbottom"><span class="cprice">$44.99</span><span class="addbtn">+ CART</span></div></div></a><a class="card" href="#" style="--h:225"><div class="cover"><span class="gname">PIXEL<br/>QUEST IV</span></div><div class="cinfo"><h4>Pixel Quest IV</h4><div class="cbottom"><span class="cprice">$39.99</span><span class="addbtn">+ CART</span></div></div></a></div>
+    </div>
+  </section>
+
+  <footer><div class="wrap fbtm"><span>© 1988–2026 K.O GAMES</span><span>PLAY MORE · WIN MORE</span></div></footer>
+
+  <script>
+    document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+      document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+      document.querySelectorAll('.panel-body').forEach(x=>x.classList.remove('show'));
+      t.classList.add('active'); document.getElementById(t.dataset.t).classList.add('show');
+    }));
+    document.querySelectorAll('.opt').forEach(o=>o.addEventListener('click',function(){
+      [...this.parentElement.children].forEach(s=>s.classList.remove('sel')); this.classList.add('sel');
+    }));
+    document.querySelectorAll('.thumb').forEach(o=>o.addEventListener('click',function(){
+      document.querySelectorAll('.thumb').forEach(s=>s.classList.remove('active')); this.classList.add('active');
+    }));
+    let q=1; const qs=document.querySelector('.qty span'); const [minus,plus]=document.querySelectorAll('.qty button');
+    minus.onclick=()=>{q=Math.max(1,q-1); qs.textContent=q}; plus.onclick=()=>{q++; qs.textContent=q};
+  </script>
+
+</body>
+</html>

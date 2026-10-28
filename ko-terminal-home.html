@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>K.O GAMES — Terminal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box; margin:0; padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.5}
+  a{color:inherit; text-decoration:none}
+  img{display:block; max-width:100%}
+  .wrap{max-width:1260px; margin:0 auto; padding:0 26px}
+  .btn{display:inline-block; text-align:center; cursor:pointer; font-family:var(--disp); font-size:15px; padding:15px 26px; transition:transform .12s, box-shadow .12s, background .2s, color .2s}
+  .badge{display:inline-block; font-family:var(--disp); font-size:12px; padding:6px 12px}
+  .topbar{text-align:center; font-size:12px; padding:10px; letter-spacing:1px}
+  header.site{position:sticky; top:0; z-index:50}
+  .nav{display:flex; align-items:center; gap:22px; padding:16px 0}
+  .logo{font-family:var(--disp); font-size:22px; display:flex; align-items:center; gap:7px; white-space:nowrap}
+  nav.links{display:flex; gap:6px; margin-left:8px}
+  nav.links a{padding:8px 12px; font-size:15px}
+  .search{margin-left:auto; display:flex; align-items:center; gap:10px; padding:9px 16px; min-width:240px}
+  .search input{background:none; border:none; outline:none; font:inherit; font-size:15px; width:100%; color:inherit}
+  .hicons{display:flex; gap:10px; align-items:center}
+  .icbtn{font-family:var(--disp); font-size:12px; padding:10px 14px; position:relative; cursor:pointer}
+  .icbtn .count{position:absolute; top:-9px; right:-9px; width:22px; height:22px; border-radius:50%; display:grid; place-items:center; font-size:11px}
+  .hero{padding:56px 0 34px}
+  .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:44px; align-items:center}
+  .hero .kick{display:inline-block; font-family:var(--disp); font-size:13px; margin-bottom:18px}
+  .hero h1{font-family:var(--disp); font-size:62px; line-height:1; margin-bottom:20px}
+  .hero p{font-size:20px; max-width:440px; margin-bottom:26px}
+  .hero-cta{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+  .pill{font-family:var(--disp); font-size:14px; padding:10px 16px}
+  .pill s{opacity:.6; font-size:11px; margin-right:6px}
+  .hstats{display:flex; gap:14px; margin-top:28px; flex-wrap:wrap}
+  .hstat{padding:12px 16px}
+  .hstat b{font-family:var(--disp); font-size:18px; display:block} .hstat span{font-size:14px}
+  .herocard{position:relative}
+  .cart-art,.bigcover{aspect-ratio:1/1.02; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center}
+  .cart-art .label,.bigcover .label{width:72%; height:46%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px}
+  .label .t{font-family:var(--disp); font-size:34px; text-align:center; line-height:.95}
+  .label .g{font-family:var(--disp); font-size:12px}
+  .grip{position:absolute; top:0; left:18%; right:18%; height:8%}
+  .sticker{position:absolute; font-family:var(--disp); font-size:14px; width:80px; height:80px; display:grid; place-items:center; text-align:center; line-height:1}
+  .sticker.s1{top:-18px; right:-12px} .sticker.s2{bottom:-16px; left:-16px; width:90px; height:90px; font-size:13px}
+  section{padding:56px 0}
+  .shead{display:flex; align-items:center; justify-content:space-between; margin-bottom:26px; gap:14px; flex-wrap:wrap}
+  .shead h2{font-family:var(--disp); font-size:30px} .shead h2 em{font-style:normal}
+  .shead a{font-family:var(--disp); font-size:13px; padding:9px 14px}
+  .cats{display:grid; grid-template-columns:repeat(4,1fr); gap:18px}
+  .cat{padding:24px; cursor:pointer; transition:transform .12s, box-shadow .12s}
+  .cat .ic{font-size:24px; width:56px; height:56px; display:grid; place-items:center; margin-bottom:16px}
+  .cat h3{font-family:var(--disp); font-size:17px; margin-bottom:6px} .cat p{font-size:15px}
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px}
+  .card{display:flex; flex-direction:column; overflow:hidden; transition:transform .15s, box-shadow .15s}
+  .cover{aspect-ratio:3/3.4; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; padding:16px}
+  .cover .gname{font-family:var(--disp); font-size:21px; text-align:center; line-height:1; position:relative; z-index:1}
+  .cover .gtag{position:absolute; top:12px; left:12px; font-size:10px; padding:5px 10px; z-index:2}
+  .cover .fav{position:absolute; top:12px; right:12px; width:34px; height:34px; display:grid; place-items:center; font-size:16px; z-index:2}
+  .cinfo{padding:16px; display:flex; flex-direction:column; gap:8px; flex:1}
+  .cinfo h4{font-family:var(--disp); font-size:15px; line-height:1.15}
+  .cmeta{display:flex; gap:6px; align-items:center; flex-wrap:wrap}
+  .plat{font-size:10px; padding:3px 7px}
+  .st{margin-left:auto; font-size:12px}
+  .cbottom{display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:6px}
+  .cprice{font-family:var(--disp); font-size:18px} .cprice s{font-size:12px; opacity:.5; margin-right:6px}
+  .addbtn{font-family:var(--disp); font-size:11px; padding:8px 12px; cursor:pointer}
+  .hw{padding:42px; display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; position:relative; overflow:hidden}
+  .hw h2{font-family:var(--disp); font-size:36px; line-height:1.05; margin:16px 0} .hw h2 em{font-style:normal}
+  .hw p{font-size:18px; margin-bottom:24px; max-width:400px}
+  .hwgrid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  .hwc{padding:18px; text-align:center}
+  .hwbox{height:74px; margin-bottom:12px}
+  .hwn{font-family:var(--disp); font-size:13px; margin-bottom:5px} .hwp{font-family:var(--disp); font-size:15px}
+  .goodies{display:grid; grid-template-columns:repeat(4,1fr); gap:20px}
+  .good{overflow:hidden; transition:transform .15s}
+  .gimg{height:150px; display:grid; place-items:center; font-family:var(--disp); font-size:14px; text-align:center; padding:10px}
+  .gb{padding:14px; display:flex; justify-content:space-between; align-items:center; gap:10px}
+  .gb h4{font-family:var(--disp); font-size:13px} .gb b{font-family:var(--disp); font-size:15px}
+  .club{padding:50px; text-align:center; position:relative; overflow:hidden}
+  .club h2{font-family:var(--disp); font-size:36px; margin:16px 0 12px}
+  .club p{font-size:19px; max-width:520px; margin:0 auto 26px}
+  .club form{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+  .club input{padding:14px 20px; font:inherit; font-size:17px; min-width:290px; outline:none}
+  footer{padding:50px 0 28px; margin-top:40px}
+  .fcols{display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:30px; margin-bottom:34px}
+  .fcols p{margin-top:14px; max-width:280px}
+  .fcols h5{font-family:var(--disp); font-size:13px; margin-bottom:16px}
+  .fcols a:not(.logo){display:block; margin-bottom:9px}
+  .fbtm{padding-top:22px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:12px}
+  /* page produit */
+  .crumb{padding:24px 0 4px; font-size:15px}
+  .pmain{display:grid; grid-template-columns:1fr 1fr; gap:44px; padding:18px 0 56px; align-items:start}
+  .gallery{position:sticky; top:100px}
+  .bigcover .label .t{font-size:46px}
+  .bigcover .stk{position:absolute; top:14px; right:14px; width:84px; height:84px; display:grid; place-items:center; font-family:var(--disp); font-size:13px}
+  .thumbs{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:16px}
+  .thumb{aspect-ratio:1; cursor:pointer}
+  .row1{display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap}
+  .ptag{font-family:var(--disp); font-size:11px; padding:7px 12px}
+  .instock{font-family:var(--disp); font-size:11px}
+  .pinfo h1{font-family:var(--disp); font-size:52px; line-height:.98; margin-bottom:16px}
+  .raterow{display:flex; align-items:center; gap:12px; margin-bottom:20px; flex-wrap:wrap}
+  .stars{font-size:20px; letter-spacing:2px}
+  .pdesc{font-size:19px; margin-bottom:24px; max-width:520px}
+  .priceblk{display:flex; align-items:center; gap:14px; padding:16px 20px; margin-bottom:24px}
+  .priceblk .now{font-family:var(--disp); font-size:34px} .priceblk .was{font-family:var(--disp); font-size:17px; text-decoration:line-through; opacity:.5}
+  .priceblk .save{font-family:var(--disp); font-size:11px; padding:7px 11px; margin-left:auto}
+  .optlabel{font-family:var(--disp); font-size:12px; margin-bottom:11px; display:block}
+  .opts{display:flex; gap:11px; flex-wrap:wrap; margin-bottom:24px}
+  .opt{font-family:var(--disp); font-size:12px; padding:13px 16px; cursor:pointer; text-align:center; transition:.12s}
+  .opt small{display:block; font-family:var(--body); font-size:11px; opacity:.75; margin-top:4px}
+  .buyrow{display:flex; gap:14px; align-items:stretch; margin-bottom:14px; flex-wrap:wrap}
+  .qty{display:flex; align-items:center}
+  .qty button{font-family:var(--disp); font-size:16px; background:none; border:none; color:inherit; padding:0 16px; cursor:pointer; height:100%}
+  .qty span{font-family:var(--disp); padding:0 6px; min-width:34px; text-align:center}
+  .buyrow .btn{flex:1; min-width:160px}
+  .secure{font-size:15px; margin-bottom:26px; line-height:1.9}
+  .feats{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  .feat{display:flex; gap:12px; align-items:center; padding:16px}
+  .feat .fi{font-size:18px; width:46px; height:46px; display:grid; place-items:center; flex-shrink:0}
+  .feat b{font-family:var(--disp); font-size:13px; display:block; margin-bottom:2px} .feat span{font-size:15px}
+  .tabsec{padding:46px 0}
+  .tabs{display:flex; gap:12px; margin-bottom:26px; flex-wrap:wrap}
+  .tab{font-family:var(--disp); font-size:13px; padding:13px 22px; cursor:pointer}
+  .panel-body{display:none} .panel-body.show{display:block}
+  .panel-body p{font-size:19px; max-width:780px; margin-bottom:16px}
+  .specs{display:grid; grid-template-columns:1fr 1fr; overflow:hidden; max-width:780px}
+  .specs div{padding:16px 20px} .specs .k{font-family:var(--disp); font-size:12px}
+  .review{padding:20px; margin-bottom:14px; max-width:780px}
+  .review p{margin:0!important}
+  .review .rh{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px}
+  .review .who{font-family:var(--disp); font-size:13px}
+  .related{padding:46px 0}
+  .related h2{font-family:var(--disp); font-size:28px; margin-bottom:26px} .related h2 em{font-style:normal}
+  .related .cover{aspect-ratio:3/3.2}
+  footer .fbtm:only-child{padding-top:0}
+  @media(max-width:900px){
+    .hero-grid,.hw,.hwgrid,.pmain,.feats{grid-template-columns:1fr}
+    .cats,.grid,.goodies,.fcols{grid-template-columns:1fr 1fr}
+    nav.links,.search{display:none}
+    .hero h1{font-size:44px} .pinfo h1{font-size:38px}
+    .gallery{position:static}
+  }
+  @media(max-width:520px){ .specs{grid-template-columns:1fr} .hicons .icbtn:first-child{display:none} .club,.hw{padding:28px} }
+
+  :root{--bg:#0b0f0c; --ink:#c8f7d2; --vert:#39ff7a; --ambre:#ffb000; --dim:#5f7d66; --ligne:#1f3a27; --disp:'JetBrains Mono',monospace; --body:'JetBrains Mono',monospace}
+  body{font-size:15px; background:var(--bg) repeating-linear-gradient(0deg,rgba(57,255,122,.035) 0 1px,transparent 1px 3px)}
+  .btn{color:var(--vert); background:transparent; border:1px solid var(--vert); font-weight:700; font-size:14px}
+  .btn::before{content:"[ "} .btn::after{content:" ]"}
+  .btn:hover{background:var(--vert); color:var(--bg)}
+  .btn.primary{background:var(--vert); color:var(--bg)} .btn.primary:hover{background:var(--ambre); border-color:var(--ambre)}
+  .badge{color:var(--ambre); border:1px dashed var(--ambre)}
+  .topbar{color:var(--dim); border-bottom:1px solid var(--ligne); text-align:left; padding-left:26px}
+  .topbar::before{content:"$ echo \""; color:var(--vert)} .topbar::after{content:"\""; color:var(--vert)} .topbar span{color:var(--ambre)}
+  header.site{background:rgba(11,15,12,.92); border-bottom:1px solid var(--ligne)}
+  .logo{font-size:18px; font-weight:800; color:var(--vert)} .logo::before{content:"~/"; color:var(--dim)} .logo .ko{color:var(--bg); background:var(--vert); padding:0 6px}
+  nav.links a{color:var(--dim)} nav.links a::before{content:"./"} nav.links a:hover{color:var(--vert)}
+  .search{border:1px solid var(--ligne); color:var(--vert)} .loupe::before{content:"grep "; color:var(--dim)} .loupe{font-size:0} .loupe::before{font-size:14px}
+  .icbtn{border:1px solid var(--ligne); color:var(--ink); font-weight:500} .icbtn:hover{border-color:var(--vert); color:var(--vert)}
+  .icbtn .count{background:var(--ambre); color:var(--bg); border-radius:0; font-weight:800}
+  .hero .kick{color:var(--ambre)} .hero .kick::before{content:"// "}
+  .hero h1{font-size:58px; font-weight:800; color:var(--vert); text-shadow:0 0 18px rgba(57,255,122,.45); letter-spacing:-.02em}
+  .hero h1 .b{color:var(--ambre); text-shadow:0 0 18px rgba(255,176,0,.45)}
+  .hero h1::after{content:"█"; color:var(--vert); animation:clign 1s steps(1) infinite; margin-left:.1em}
+  @keyframes clign{50%{opacity:0}}
+  .hero p{color:var(--ink); font-size:17px} .hero p::before{content:"> "; color:var(--vert)}
+  .pill{color:var(--ambre); border:1px solid var(--ambre)}
+  .hstat{border:1px solid var(--ligne)} .hstat b{color:var(--vert)} .hstat span{color:var(--dim)}
+  .cart-art{border:3px double var(--vert); background:repeating-linear-gradient(0deg,rgba(57,255,122,.06) 0 1px,transparent 1px 4px); box-shadow:0 0 40px rgba(57,255,122,.15) inset}
+  .cart-art::before{content:"┌─ cartridge.rom ─────────┐"; position:absolute; top:6%; left:0; right:0; text-align:center; color:var(--dim); font-size:14px; white-space:pre}
+  .cart-art::after{content:"> loading... 100%"; position:absolute; bottom:7%; left:0; right:0; text-align:center; color:var(--vert); font-size:14px}
+  .grip{display:none}
+  .label{border:1px dashed var(--ambre)} .label .t{color:var(--ambre); font-size:52px; text-shadow:0 0 16px rgba(255,176,0,.5)} .label .g{color:var(--vert)}
+  .sticker{border:1px solid var(--vert); color:var(--vert); background:var(--bg); width:auto; height:auto; padding:8px 12px; font-size:13px}
+  .sticker.s1{top:-14px; right:10px} .sticker.s2{left:10px; bottom:-14px; width:auto; height:auto; color:var(--ambre); border-color:var(--ambre)} .sticker.s2 br{display:none}
+  .shead{border-bottom:1px dashed var(--ligne); padding-bottom:12px}
+  .shead h2{font-size:24px; color:var(--vert)} .shead h2::before{content:"> "; color:var(--dim)} .shead h2 em{color:var(--ambre)}
+  .shead a{color:var(--dim)} .shead a:hover{color:var(--vert)}
+  .cat{border:1px solid var(--ligne)} .cat:hover{border-color:hsl(var(--h) 100% 62%); box-shadow:0 0 24px -6px hsl(var(--h) 100% 50%)}
+  .cat .ic{color:hsl(var(--h) 100% 65%); border:1px solid currentColor} .cat h3{color:var(--ink)} .cat p{color:var(--dim)}
+  .card{border:1px solid var(--ligne)} .card:hover{border-color:var(--vert)}
+  .cover{border-bottom:1px solid var(--ligne); background:radial-gradient(circle at 50% 55%,hsl(var(--h) 100% 50% / .22),transparent 65%),repeating-linear-gradient(0deg,hsl(var(--h) 100% 60% / .08) 0 1px,transparent 1px 4px)}
+  .cover .gname{color:hsl(var(--h) 100% 68%); text-shadow:0 0 14px hsl(var(--h) 100% 55%); font-size:22px}
+  .cover .gtag{color:var(--dim); border:1px solid var(--ligne)} .cover .gtag::before{content:"#"}
+  .cover .fav{color:var(--dim); border:1px solid var(--ligne)}
+  .cinfo h4{font-size:14px; color:var(--ink)}
+  .plat{color:var(--dim); border:1px solid var(--ligne)} .st{color:var(--ambre)}
+  .cprice{color:var(--vert); font-size:17px} .addbtn{color:var(--vert); border:1px solid var(--vert)} .card:hover .addbtn{background:var(--vert); color:var(--bg)}
+  .hw{border:3px double var(--ligne)} .hw h2{color:var(--vert)} .hw h2 em{color:var(--ambre)} .hw p{color:var(--dim)}
+  .hwc{border:1px solid var(--ligne)} .hwbox{background:repeating-linear-gradient(90deg,hsl(var(--h) 100% 60% / .5) 0 2px,transparent 2px 6px); border:1px solid hsl(var(--h) 100% 60% / .6)}
+  .hwn{color:var(--ink)} .hwp{color:var(--ambre)}
+  .good{border:1px solid var(--ligne)}
+  .gimg{color:hsl(var(--h) 100% 68%); border-bottom:1px solid var(--ligne); text-shadow:0 0 10px hsl(var(--h) 100% 55%); background:repeating-linear-gradient(45deg,hsl(var(--h) 100% 60% / .07) 0 6px,transparent 6px 12px)}
+  .gb h4{color:var(--ink)} .gb b{color:var(--vert)}
+  .club{border:1px dashed var(--vert)} .club h2{color:var(--vert)} .club p{color:var(--dim)}
+  .club input{background:transparent; border:1px solid var(--ligne); color:var(--vert)} .club input:focus{border-color:var(--vert)}
+  footer{border-top:1px solid var(--ligne)} .fcols p,.fcols a:not(.logo){color:var(--dim)} .fcols a:not(.logo):hover{color:var(--vert)} .fcols h5{color:var(--ambre)} .fcols h5::before{content:"## "}
+  .fbtm{border-top:1px dashed var(--ligne); color:var(--dim)}
+  .crumb{color:var(--dim)} .crumb::before{content:"pwd: "} .crumb span{color:var(--vert)}
+  .bigcover{border:3px double var(--vert); background:repeating-linear-gradient(0deg,rgba(57,255,122,.06) 0 1px,transparent 1px 4px)}
+  .bigcover .label .t{font-size:70px}
+  .bigcover .stk{width:auto; height:auto; padding:8px 12px; border:1px solid var(--ambre); color:var(--ambre)}
+  .thumb{border:1px solid var(--ligne); background:radial-gradient(circle,hsl(var(--h) 100% 50% / .35),transparent 70%)} .thumb.active{border-color:var(--vert)}
+  .ptag{color:var(--ambre); border:1px dashed var(--ambre)} .instock{color:var(--vert)}
+  .pinfo h1{color:var(--vert); text-shadow:0 0 18px rgba(57,255,122,.45); font-weight:800} .pinfo h1 .b{color:var(--ambre)}
+  .stars{color:var(--ambre)} .rv{color:var(--dim)} .pdesc{color:var(--ink)}
+  .priceblk{border:1px solid var(--ligne)} .priceblk .now{color:var(--vert)} .priceblk .save{background:var(--ambre); color:var(--bg)}
+  .optlabel{color:var(--dim)} .optlabel::before{content:"--"}
+  .opt{border:1px solid var(--ligne); color:var(--ink)} .opt:hover{border-color:var(--vert)} .opt.sel{border-color:var(--vert); color:var(--vert); box-shadow:inset 0 0 0 1px var(--vert)}
+  .qty{border:1px solid var(--ligne)} .secure{color:var(--dim)} .secure b{color:var(--ink)}
+  .feat{border:1px solid var(--ligne)} .feat .fi{color:hsl(var(--h) 100% 65%); border:1px solid currentColor} .feat span{color:var(--dim)}
+  .tabsec,.related{border-top:1px dashed var(--ligne)}
+  .tab{border:1px solid var(--ligne); color:var(--dim)} .tab.active{color:var(--bg); background:var(--vert); border-color:var(--vert)}
+  .specs{border:1px solid var(--ligne)} .specs div{border-bottom:1px solid var(--ligne)} .specs .k{color:var(--ambre)}
+  .review{border-left:2px solid var(--vert); background:rgba(57,255,122,.04)} .review .who{color:var(--vert)} .review .who::before{content:"@"} .review .st{color:var(--ambre)}
+  .related h2{color:var(--vert)} .related h2 em{color:var(--ambre)}
+  @media(prefers-reduced-motion:reduce){.hero h1::after{animation:none}}
+</style>
+</head>
+<body data-screen-label="Terminal — Home">
+
+  <div class="topbar">FREE SHIPPING OVER $60 <span>·</span> NEW DROPS EVERY FRIDAY <span>·</span> MEMBERS GET 2× COINS</div>
+  <header class="site">
+    <div class="wrap nav">
+      <a class="logo" href="ko-terminal-home.html"><span class="ko">K.O</span><span class="g">GAMES</span></a>
+      <nav class="links"><a href="#games">Games</a><a href="#hw">Consoles</a><a href="#games">Accessories</a><a href="#goodies">Goodies</a><a href="#club">Deals</a></nav>
+      <div class="search"><span class="loupe">⌕</span><input placeholder="Search games &amp; gear…" /></div>
+      <div class="hicons"><a class="icbtn" href="#">SIGN IN</a><a class="icbtn" href="ko-terminal-product.html">CART<span class="count">3</span></a></div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="kick">★ GAME OF THE WEEK ★</span>
+        <h1><span class="a">NEON</span> <span class="b">DRIFT</span><br/>RACE THE NIGHT!</h1>
+        <p>Burn rubber through a neon megacity in the arcade racer everyone's playing. Out now on every system.</p>
+        <div class="hero-cta">
+          <a class="btn primary" href="ko-terminal-product.html">BUY NOW</a>
+          <a class="btn" href="ko-terminal-product.html">VIEW GAME</a>
+          <span class="pill"><s>$59.99</s> $49.99</span>
+        </div>
+        <div class="hstats">
+          <div class="hstat"><b>4.9★</b><span>12.4k reviews</span></div>
+          <div class="hstat"><b>1–4P</b><span>Local + online</span></div>
+          <div class="hstat"><b>4K60</b><span>HDR ready</span></div>
+        </div>
+      </div>
+      <div class="herocard">
+        <div class="cart-art">
+          <div class="grip"></div>
+          <div class="label"><div class="t">NEON<br/>DRIFT</div><div class="g">▸ ARCADE RACER</div></div>
+        </div>
+        <div class="sticker s1">NEW!</div>
+        <div class="sticker s2">-17%<br/>OFF</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="cats-sec">
+    <div class="wrap">
+      <div class="shead"><h2>Shop by <em>category</em></h2><a href="#games">ALL DEPARTMENTS →</a></div>
+      <div class="cats"><div class="cat" style="--h:330"><div class="ic">◉</div><h3>Video Games</h3><p>1,200+ titles · PC &amp; console</p></div><div class="cat" style="--h:180"><div class="ic">▦</div><h3>Consoles</h3><p>Next-gen &amp; retro hardware</p></div><div class="cat" style="--h:45"><div class="ic">✦</div><h3>Accessories</h3><p>Pads, sticks &amp; headsets</p></div><div class="cat" style="--h:265"><div class="ic">★</div><h3>Goodies</h3><p>Pins, plush &amp; posters</p></div></div>
+    </div>
+  </section>
+
+  <!-- PRODUCT GRID -->
+  <section id="games">
+    <div class="wrap">
+      <div class="shead"><h2>Fresh <em>drops</em></h2><a href="#">SEE ALL 1200 →</a></div>
+      <div class="grid">
+
+        <a class="card" href="ko-terminal-product.html" style="--h:0"><div class="cover"><span class="gtag">RACING</span><span class="fav">♡</span><span class="gname">NEON<br/>DRIFT</span></div>
+          <div class="cinfo"><h4>Neon Drift</h4><div class="cmeta"><span class="plat">PS5</span><span class="plat">PC</span><span class="st">★4.9</span></div><div class="cbottom"><span class="cprice"><s>$59</s>$49.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+        <a class="card" href="ko-terminal-product.html" style="--h:225"><div class="cover"><span class="gtag">RPG</span><span class="fav">♡</span><span class="gname">PIXEL<br/>QUEST IV</span></div>
+          <div class="cinfo"><h4>Pixel Quest IV</h4><div class="cmeta"><span class="plat">SWITCH</span><span class="plat">PC</span><span class="st">★4.7</span></div><div class="cbottom"><span class="cprice">$39.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+        <a class="card" href="ko-terminal-product.html" style="--h:150"><div class="cover"><span class="gtag">SHOOTER</span><span class="fav">♡</span><span class="gname">GALAXY<br/>RAIDERS</span></div>
+          <div class="cinfo"><h4>Galaxy Raiders</h4><div class="cmeta"><span class="plat">PS5</span><span class="plat">PC</span><span class="st">★4.9</span></div><div class="cbottom"><span class="cprice">$59.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+        <a class="card" href="ko-terminal-product.html" style="--h:45"><div class="cover"><span class="gtag">FIGHTING</span><span class="fav">♡</span><span class="gname">KOMBAT<br/>FURY</span></div>
+          <div class="cinfo"><h4>Kombat Fury</h4><div class="cmeta"><span class="plat">PS5</span><span class="plat">XBX</span><span class="st">★4.6</span></div><div class="cbottom"><span class="cprice">$44.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+        <a class="card" href="ko-terminal-product.html" style="--h:265"><div class="cover"><span class="gtag">ADVENTURE</span><span class="fav">♡</span><span class="gname">STAR<br/>VOYAGER</span></div>
+          <div class="cinfo"><h4>Star Voyager</h4><div class="cmeta"><span class="plat">SWITCH</span><span class="plat">PC</span><span class="st">★4.8</span></div><div class="cbottom"><span class="cprice">$54.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+        <a class="card" href="ko-terminal-product.html" style="--h:180"><div class="cover"><span class="gtag">ARCADE</span><span class="fav">♡</span><span class="gname">BLOCK<br/>BREAKER</span></div>
+          <div class="cinfo"><h4>Block Breaker DX</h4><div class="cmeta"><span class="plat">ALL</span><span class="st">★4.5</span></div><div class="cbottom"><span class="cprice">$19.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+        <a class="card" href="ko-terminal-product.html" style="--h:25"><div class="cover"><span class="gtag">ROGUELIKE</span><span class="fav">♡</span><span class="gname">DUNGEON<br/>LOOP</span></div>
+          <div class="cinfo"><h4>Dungeon Loop</h4><div class="cmeta"><span class="plat">PC</span><span class="plat">SWITCH</span><span class="st">★4.9</span></div><div class="cbottom"><span class="cprice">$24.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+        <a class="card" href="ko-terminal-product.html" style="--h:330"><div class="cover"><span class="gtag">RACING</span><span class="fav">♡</span><span class="gname">TURBO<br/>KART</span></div>
+          <div class="cinfo"><h4>Turbo Kart Mania</h4><div class="cmeta"><span class="plat">SWITCH</span><span class="st">★4.7</span></div><div class="cbottom"><span class="cprice">$34.99</span><span class="addbtn">+ CART</span></div></div></a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HARDWARE -->
+  <section id="hw">
+    <div class="wrap">
+      <div class="hw">
+        <div>
+          <span class="badge">HARDWARE DROP</span>
+          <h2>Level up your<br/><em>battle station!</em></h2>
+          <p>Next-gen consoles &amp; retro classics, fully tested. Bundle any console with two games and save 15%.</p>
+          <a class="btn primary" href="#">SHOP CONSOLES →</a>
+        </div>
+        <div class="hwgrid"><div class="hwc" style="--h:225"><div class="hwbox"></div><div class="hwn">PixelStation 5</div><div class="hwp">$499</div></div><div class="hwc" style="--h:0"><div class="hwbox"></div><div class="hwn">K.O Switch</div><div class="hwp">$299</div></div><div class="hwc" style="--h:150"><div class="hwbox"></div><div class="hwn">MegaBox Series K</div><div class="hwp">$449</div></div><div class="hwc" style="--h:45"><div class="hwbox"></div><div class="hwn">Retro Mini '88</div><div class="hwp">$89</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOODIES -->
+  <section id="goodies">
+    <div class="wrap">
+      <div class="shead"><h2>Loot &amp; <em>goodies</em></h2><a href="#">BROWSE MERCH →</a></div>
+      <div class="goodies"><div class="good" style="--h:330"><div class="gimg">ENAMEL PINS</div><div class="gb"><h4>Boss Pins ×6</h4><b>$14</b></div></div><div class="good" style="--h:180"><div class="gimg">8-BIT PLUSH</div><div class="gb"><h4>Slime Plush</h4><b>$22</b></div></div><div class="good" style="--h:25"><div class="gimg">A1 POSTER</div><div class="gb"><h4>Neon Drift</h4><b>$18</b></div></div><div class="good" style="--h:265"><div class="gimg">SNAPBACK CAP</div><div class="gb"><h4>K.O Crew</h4><b>$28</b></div></div></div>
+    </div>
+  </section>
+
+  <!-- CLUB -->
+  <section id="club">
+    <div class="wrap">
+      <div class="club">
+        <span class="badge">★ K.O CLUB</span>
+        <h2>Join the club!</h2>
+        <p>Get 2× coins, early drops and members-only deals. Pop in your email to continue.</p>
+        <form onsubmit="return false"><input placeholder="player@email.com" /><button class="btn primary" type="submit">PRESS START →</button></form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="fcols">
+        <div><a class="logo" href="ko-terminal-home.html"><span class="ko">K.O</span><span class="g">GAMES</span></a><p>The arcade reborn, full colour. New &amp; retro games, hardware and loot since 1988.</p></div>
+        <div><h5>SHOP</h5><a href="#">Video Games</a><a href="#">Consoles</a><a href="#">Accessories</a><a href="#">Goodies</a></div>
+        <div><h5>SUPPORT</h5><a href="#">Track Order</a><a href="#">Returns</a><a href="#">Trade-In</a><a href="#">Contact</a></div>
+        <div><h5>K.O CLUB</h5><a href="#">Rewards</a><a href="#">Gift Cards</a><a href="#">Events</a><a href="#">Careers</a></div>
+      </div>
+      <div class="fbtm"><span>© 1988–2026 K.O GAMES</span><span>PLAY MORE · WIN MORE</span></div>
+    </div>
+  </footer>
+
+</body>
+</html>

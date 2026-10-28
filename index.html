@@ -49,7 +49,8 @@
   .btn.ghost:hover{border-color:#555; background:rgba(255,255,255,.03)}
 
   footer{border-top:1px solid var(--line); padding:26px 0; text-align:center; color:var(--dim); font-size:14px}
-  @media(max-width:1000px){ .grid{grid-template-columns:1fr; max-width:520px; margin:0 auto} header h1{font-size:34px} }
+  @media(max-width:1200px){ .grid{grid-template-columns:1fr 1fr} }
+  @media(max-width:760px){ .grid{grid-template-columns:1fr; max-width:520px; margin:0 auto} header h1{font-size:34px} }
 </style>
 </head>
 <body>
@@ -58,7 +59,7 @@
     <div class="wrap">
       <div class="logo"><b>K.O</b><i>GAMES</i></div>
       <h1>Plusieurs directions artistiques pour <span>votre site</span></h1>
-      <p>Même boutique, mêmes produits — trois ambiances rétro-arcade différentes. Un exemple de ce que je peux réaliser pour votre site : prévisualisez chaque option ci-dessous, ouvrez la page d'accueil et la page produit, puis dites-moi laquelle vous préférez.</p>
+      <p>Même boutique, mêmes produits — sept ambiances très différentes, du magazine papier au terminal. Un exemple de ce que je peux réaliser pour votre site : prévisualisez chaque option ci-dessous, ouvrez la page d'accueil et la page produit, puis dites-moi laquelle vous préférez.</p>
       <div class="hint">🎮 Chaque direction comprend une <b>page d'accueil</b> + une <b>page produit</b></div>
     </div>
   </header>
@@ -66,45 +67,11 @@
   <div class="wrap">
     <div class="grid">
 
-      <!-- A -->
+      <!-- 01 Pop Cartridge -->
       <div class="opt">
         <div class="preview">
           <div class="num">01</div>
-          <iframe class="frame" src="ko-arcade-home.html" title="Arcade preview" scrolling="no"></iframe>
-          <a class="veil" href="ko-arcade-home.html"></a>
-        </div>
-        <div class="obody">
-          <div class="ohead"><h3>8-Bit Arcade</h3>
-            <div class="swatches"><span class="sw" style="background:#ff2e63"></span><span class="sw" style="background:#21e6c1"></span><span class="sw" style="background:#ffd23f"></span><span class="sw" style="background:#100c1c"></span></div>
-          </div>
-          <div class="otag">Pixel · Scanlines · NES palette</div>
-          <p class="odesc">Chunky pixel type, hard shadows and CRT scanlines. Pure cartridge-era nostalgia for a retro-leaning crowd.</p>
-          <div class="actions"><a class="btn primary" href="ko-arcade-home.html">Open home</a><a class="btn ghost" href="ko-arcade-product.html">Product page</a></div>
-        </div>
-      </div>
-
-      <!-- B -->
-      <div class="opt">
-        <div class="preview">
-          <div class="num">02</div>
-          <iframe class="frame" src="ko-neon-home.html" title="Neon preview" scrolling="no"></iframe>
-          <a class="veil" href="ko-neon-home.html"></a>
-        </div>
-        <div class="obody">
-          <div class="ohead"><h3>Neon Synthwave</h3>
-            <div class="swatches"><span class="sw" style="background:#ff3ca6"></span><span class="sw" style="background:#00f0ff"></span><span class="sw" style="background:#a64bff"></span><span class="sw" style="background:#0a0118"></span></div>
-          </div>
-          <div class="otag">Glow · Synth sun · Perspective grid</div>
-          <p class="odesc">80s after-dark vibe: neon glow, a setting sun and an infinite grid. Premium and atmospheric, still playful.</p>
-          <div class="actions"><a class="btn primary" href="ko-neon-home.html">Open home</a><a class="btn ghost" href="ko-neon-product.html">Product page</a></div>
-        </div>
-      </div>
-
-      <!-- C -->
-      <div class="opt">
-        <div class="preview">
-          <div class="num">03</div>
-          <iframe class="frame" src="ko-pop-home.html" title="Pop preview" scrolling="no"></iframe>
+          <iframe class="frame" loading="lazy" src="ko-pop-home.html" title="Pop preview" scrolling="no"></iframe>
           <a class="veil" href="ko-pop-home.html"></a>
         </div>
         <div class="obody">
@@ -117,10 +84,113 @@
         </div>
       </div>
 
+
+      <!-- 02 Arcade Mag -->
+      <div class="opt">
+        <div class="preview">
+          <div class="num">02</div>
+          <iframe class="frame" loading="lazy" src="ko-mag-home.html" title="Arcade Mag preview" scrolling="no"></iframe>
+          <a class="veil" href="ko-mag-home.html"></a>
+        </div>
+        <div class="obody">
+          <div class="ohead"><h3>Arcade Mag</h3>
+            <div class="swatches"><span class="sw" style="background:#ff2a1a"></span><span class="sw" style="background:#ffe500"></span><span class="sw" style="background:#0d0d0d"></span><span class="sw" style="background:#ffffff"></span></div>
+          </div>
+          <div class="otag">Print · Huge type · Hard rules</div>
+          <p class="odesc">A 90s games-magazine cover come to life: giant condensed headlines, black rules, starburst stickers. Loud, editorial, impossible to miss.</p>
+          <div class="actions"><a class="btn primary" href="ko-mag-home.html">Open home</a><a class="btn ghost" href="ko-mag-product.html">Product page</a></div>
+        </div>
+      </div>
+
+      <!-- 03 Y2K Chrome -->
+      <div class="opt">
+        <div class="preview">
+          <div class="num">03</div>
+          <iframe class="frame" loading="lazy" src="ko-chrome-home.html" title="Y2K Chrome preview" scrolling="no"></iframe>
+          <a class="veil" href="ko-chrome-home.html"></a>
+        </div>
+        <div class="obody">
+          <div class="ohead"><h3>Y2K Chrome</h3>
+            <div class="swatches"><span class="sw" style="background:#00a6ff"></span><span class="sw" style="background:#ff3fa4"></span><span class="sw" style="background:#c9d6e3"></span><span class="sw" style="background:#1b2a44"></span></div>
+          </div>
+          <div class="otag">Gloss · Aqua · Translucent</div>
+          <p class="odesc">Early-2000s console store: glossy aqua buttons, translucent plastic, chrome type and bubbly shapes. Optimistic and shiny.</p>
+          <div class="actions"><a class="btn primary" href="ko-chrome-home.html">Open home</a><a class="btn ghost" href="ko-chrome-product.html">Product page</a></div>
+        </div>
+      </div>
+
+      <!-- 04 Terminal -->
+      <div class="opt">
+        <div class="preview">
+          <div class="num">04</div>
+          <iframe class="frame" loading="lazy" src="ko-terminal-home.html" title="Terminal preview" scrolling="no"></iframe>
+          <a class="veil" href="ko-terminal-home.html"></a>
+        </div>
+        <div class="obody">
+          <div class="ohead"><h3>Terminal</h3>
+            <div class="swatches"><span class="sw" style="background:#39ff7a"></span><span class="sw" style="background:#ffb000"></span><span class="sw" style="background:#0b0f0c"></span><span class="sw" style="background:#1f3a27"></span></div>
+          </div>
+          <div class="otag">CLI · Monospace · Phosphor</div>
+          <p class="odesc">The shop as a command line: phosphor green on black, ASCII frames, bracket buttons and a blinking cursor. Made for players who mod their games.</p>
+          <div class="actions"><a class="btn primary" href="ko-terminal-home.html">Open home</a><a class="btn ghost" href="ko-terminal-product.html">Product page</a></div>
+        </div>
+      </div>
+
+      <!-- 05 Atelier -->
+      <div class="opt">
+        <div class="preview">
+          <div class="num">05</div>
+          <iframe class="frame" loading="lazy" src="ko-atelier-home.html" title="Atelier preview" scrolling="no"></iframe>
+          <a class="veil" href="ko-atelier-home.html"></a>
+        </div>
+        <div class="obody">
+          <div class="ohead"><h3>Atelier</h3>
+            <div class="swatches"><span class="sw" style="background:#111111"></span><span class="sw" style="background:#2b4bff"></span><span class="sw" style="background:#ecebe7"></span><span class="sw" style="background:#ffffff"></span></div>
+          </div>
+          <div class="otag">Serif · Whitespace · Gallery</div>
+          <p class="odesc">Games presented like a design gallery: serif headlines, generous white space, hairline rules and soft product tiles. Premium and collector-friendly.</p>
+          <div class="actions"><a class="btn primary" href="ko-atelier-home.html">Open home</a><a class="btn ghost" href="ko-atelier-product.html">Product page</a></div>
+        </div>
+      </div>
+
+      <!-- 06 Seventies -->
+      <div class="opt">
+        <div class="preview">
+          <div class="num">06</div>
+          <iframe class="frame" loading="lazy" src="ko-seventies-home.html" title="Seventies preview" scrolling="no"></iframe>
+          <a class="veil" href="ko-seventies-home.html"></a>
+        </div>
+        <div class="obody">
+          <div class="ohead"><h3>Seventies</h3>
+            <div class="swatches"><span class="sw" style="background:#e86a1f"></span><span class="sw" style="background:#f2a93b"></span><span class="sw" style="background:#c43c2a"></span><span class="sw" style="background:#3b2314"></span></div>
+          </div>
+          <div class="otag">Woodgrain · Stripes · Warm</div>
+          <p class="odesc">Straight out of 1977: woodgrain panels, sunset racing stripes and warm browns. The console-in-the-living-room nostalgia, done with care.</p>
+          <div class="actions"><a class="btn primary" href="ko-seventies-home.html">Open home</a><a class="btn ghost" href="ko-seventies-product.html">Product page</a></div>
+        </div>
+      </div>
+
+      <!-- 07 Manga Panel -->
+      <div class="opt">
+        <div class="preview">
+          <div class="num">07</div>
+          <iframe class="frame" loading="lazy" src="ko-manga-home.html" title="Manga Panel preview" scrolling="no"></iframe>
+          <a class="veil" href="ko-manga-home.html"></a>
+        </div>
+        <div class="obody">
+          <div class="ohead"><h3>Manga Panel</h3>
+            <div class="swatches"><span class="sw" style="background:#111111"></span><span class="sw" style="background:#ffffff"></span><span class="sw" style="background:#ff1e3c"></span><span class="sw" style="background:#d9d9d9"></span></div>
+          </div>
+          <div class="otag">Ink · Screentone · Speed lines</div>
+          <p class="odesc">A shonen manga page: black ink, screentone dots, speed lines and speech-bubble stickers, with a single red for the action.</p>
+          <div class="actions"><a class="btn primary" href="ko-manga-home.html">Open home</a><a class="btn ghost" href="ko-manga-product.html">Product page</a></div>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <footer><div class="wrap">K.O GAMES · 3 maquettes · choisissez une direction et je l'affine</div></footer>
+  <footer><div class="wrap">K.O GAMES · 7 maquettes · choisissez une direction et je l'affine</div></footer>
 
 </body>
 </html>
